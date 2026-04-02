@@ -6,6 +6,16 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		FD9843AF2F7EBC5C00CFC638 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FD00000100000001 /* FirebaseAuth */; };
+		FD9843B02F7EBC5C00CFC638 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FD00000100000002 /* FirebaseFirestore */; };
+		FD9843B12F7EBC5C00CFC638 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = FD00000100000003 /* FirebaseFunctions */; };
+		FD9843B22F7EBC5C00CFC638 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = FD00000100000004 /* FirebaseMessaging */; };
+		FD9843B32F7EBC5C00CFC638 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = FD00000100000005 /* FirebaseAnalytics */; };
+		FD9843B42F7EBC5C00CFC638 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = FD00000100000006 /* FirebaseCrashlytics */; };
+		FD9843B52F7EBC5C00CFC638 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = FD00000100000007 /* Kingfisher */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		FD98432A2F7EB5C400CFC638 /* Sequel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sequel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +33,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD9843B52F7EBC5C00CFC638 /* Kingfisher in Frameworks */,
+				FD9843B42F7EBC5C00CFC638 /* FirebaseCrashlytics in Frameworks */,
+				FD9843B32F7EBC5C00CFC638 /* FirebaseAnalytics in Frameworks */,
+				FD9843B22F7EBC5C00CFC638 /* FirebaseMessaging in Frameworks */,
+				FD9843B12F7EBC5C00CFC638 /* FirebaseFunctions in Frameworks */,
+				FD9843B02F7EBC5C00CFC638 /* FirebaseFirestore in Frameworks */,
+				FD9843AF2F7EBC5C00CFC638 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +82,13 @@
 			);
 			name = Sequel;
 			packageProductDependencies = (
+				FD00000100000001 /* FirebaseAuth */,
+				FD00000100000002 /* FirebaseFirestore */,
+				FD00000100000003 /* FirebaseFunctions */,
+				FD00000100000004 /* FirebaseMessaging */,
+				FD00000100000005 /* FirebaseAnalytics */,
+				FD00000100000006 /* FirebaseCrashlytics */,
+				FD00000100000007 /* Kingfisher */,
 			);
 			productName = Sequel;
 			productReference = FD98432A2F7EB5C400CFC638 /* Sequel.app */;
@@ -94,6 +118,10 @@
 			);
 			mainGroup = FD9843212F7EB5C400CFC638;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				FD00000200000001 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				FD00000200000002 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = FD98432B2F7EB5C400CFC638 /* Products */;
 			projectDirPath = "";
@@ -160,7 +188,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = FV87LA2849;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -224,7 +251,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = FV87LA2849;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -253,9 +279,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = FV87LA2849;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sequel/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -272,6 +298,7 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -285,9 +312,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = FV87LA2849;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sequel/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -304,6 +331,7 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -332,6 +360,63 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FD00000200000001 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.0.0;
+			};
+		};
+		FD00000200000002 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FD00000100000001 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FD00000200000001 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		FD00000100000002 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FD00000200000001 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		FD00000100000003 /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FD00000200000001 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
+		};
+		FD00000100000004 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FD00000200000001 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		FD00000100000005 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FD00000200000001 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		FD00000100000006 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FD00000200000001 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		FD00000100000007 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FD00000200000002 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FD9843222F7EB5C400CFC638 /* Project object */;
 }

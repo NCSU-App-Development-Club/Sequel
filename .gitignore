@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+
+# Xcode user state
+*.xcuserstate
+*.xcscmblueprint
+*.xccheckout
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+xcuserdata/
+
+# Build products
+DerivedData/
+build/
+.build/
+
+# Local secrets and signing artifacts
+.env
+.env.*
+*.p8
+*.mobileprovision
+*.developerprofile
+GoogleService-Info.plist
+GoogleService-Info-*.plist
+Secrets.xcconfig
+Secrets.*.xcconfig
+
+# SwiftPM local state
+.swiftpm/
