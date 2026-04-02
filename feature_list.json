@@ -1,0 +1,2538 @@
+[
+  {
+    "category": "functional",
+    "description": "App launches and displays the Home tab as the default selected tab with the Liquid Glass tab bar visible at the bottom",
+    "steps": [
+      "Step 1: Launch the app from cold start",
+      "Step 2: Verify the app loads within 2 seconds",
+      "Step 3: Verify the Home tab is selected by default",
+      "Step 4: Verify the tab bar is visible at the bottom with 3 tabs: Home, My Shows, Profile",
+      "Step 5: Verify the tab bar uses Liquid Glass styling"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Tab bar navigation switches between Home, My Shows, and Profile tabs correctly",
+    "steps": [
+      "Step 1: Launch the app on the Home tab",
+      "Step 2: Tap the My Shows tab",
+      "Step 3: Verify the My Shows screen is displayed",
+      "Step 4: Tap the Profile tab",
+      "Step 5: Verify the Profile screen is displayed",
+      "Step 6: Tap the Home tab",
+      "Step 7: Verify the Home screen is displayed again with state preserved"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Sign in with Apple authentication flow completes successfully and creates a user profile",
+    "steps": [
+      "Step 1: Launch the app as an unauthenticated user",
+      "Step 2: Navigate to the Profile tab",
+      "Step 3: Tap the Sign in with Apple button",
+      "Step 4: Complete the Apple authentication sheet",
+      "Step 5: Verify the app creates a UserProfile with a default display name",
+      "Step 6: Verify the user is redirected to the Profile screen with their info",
+      "Step 7: Verify karma is initialized to 0",
+      "Step 8: Verify joined date is set to today"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Email and password registration flow with email verification",
+    "steps": [
+      "Step 1: Navigate to the sign up screen",
+      "Step 2: Enter a valid email address",
+      "Step 3: Enter a password meeting requirements",
+      "Step 4: Tap the Register button",
+      "Step 5: Verify a verification email is sent",
+      "Step 6: Verify the user sees a prompt to verify their email",
+      "Step 7: Simulate email verification",
+      "Step 8: Verify the user can now sign in with the email and password",
+      "Step 9: Verify a UserProfile is created in Firestore"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Google Sign-In authentication flow completes and creates a profile",
+    "steps": [
+      "Step 1: Navigate to the sign in screen",
+      "Step 2: Tap the Google Sign-In button",
+      "Step 3: Complete the Google authentication flow",
+      "Step 4: Verify a UserProfile is created",
+      "Step 5: Verify the user is signed in and can access authenticated features"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Biometric unlock (Face ID / Touch ID) works for returning sessions",
+    "steps": [
+      "Step 1: Sign in with any method",
+      "Step 2: Close and relaunch the app",
+      "Step 3: Verify the biometric prompt appears",
+      "Step 4: Authenticate with Face ID or Touch ID",
+      "Step 5: Verify the user is signed in without re-entering credentials"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Unauthenticated users can browse shows and read threads but cannot comment, vote, or save",
+    "steps": [
+      "Step 1: Launch the app without signing in",
+      "Step 2: Navigate to the Home tab and verify content loads",
+      "Step 3: Tap a show card and verify Show Detail loads",
+      "Step 4: Tap an episode and verify the thread loads with comments visible",
+      "Step 5: Attempt to tap the compose bar and verify a sign-in prompt appears",
+      "Step 6: Attempt to tap a vote arrow and verify a sign-in prompt appears",
+      "Step 7: Attempt to save a show and verify a sign-in prompt appears",
+      "Step 8: Navigate to My Shows tab and verify sign-in prompt is shown",
+      "Step 9: Navigate to Profile tab and verify sign-in options are displayed"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Home tab Trending Now carousel displays 5-10 cards with highest comment velocity",
+    "steps": [
+      "Step 1: Sign in and navigate to the Home tab",
+      "Step 2: Verify the Trending Now section is visible at the top",
+      "Step 3: Verify it displays between 5 and 10 show cards",
+      "Step 4: Verify each card shows: backdrop image, show title, episode label, comment count",
+      "Step 5: Scroll the carousel horizontally and verify smooth scrolling",
+      "Step 6: Tap a trending card and verify navigation to the episode thread"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Home tab From Your Watchlist section shows unvisited threads for followed shows",
+    "steps": [
+      "Step 1: Save at least 3 shows to the watchlist",
+      "Step 2: Navigate to the Home tab",
+      "Step 3: Verify the From Your Watchlist section is visible",
+      "Step 4: Verify it shows episode threads for followed shows sorted by air date",
+      "Step 5: Verify unread indicator dots are visible on unvisited threads",
+      "Step 6: Tap a thread and verify navigation to the episode thread",
+      "Step 7: Return to Home and verify the unread dot is removed for the visited thread"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Home tab shows empty state when no shows are saved to watchlist",
+    "steps": [
+      "Step 1: Sign in with a fresh account (no saved shows)",
+      "Step 2: Navigate to the Home tab",
+      "Step 3: Verify the From Your Watchlist section shows the empty state message",
+      "Step 4: Verify the message reads 'Save shows to see discussions here.'",
+      "Step 5: Verify there is a way to navigate to search/discover shows"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Home tab Recently Aired section shows threads for episodes aired in last 48 hours",
+    "steps": [
+      "Step 1: Navigate to the Home tab",
+      "Step 2: Verify the Recently Aired section is visible",
+      "Step 3: Verify it shows threads sorted by comment count (most active first)",
+      "Step 4: Verify each row shows: poster, show title, episode title, air date, comment count",
+      "Step 5: Verify it includes shows the user does NOT follow (discovery)"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Home tab Discover section shows editorial picks and breakout shows",
+    "steps": [
+      "Step 1: Navigate to the Home tab",
+      "Step 2: Scroll down to the Discover section",
+      "Step 3: Verify show cards are displayed",
+      "Step 4: Verify shows have high engagement-to-follower ratio",
+      "Step 5: Tap a discover card and verify navigation to Show Detail"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Home tab pull-to-refresh reloads all feed sections",
+    "steps": [
+      "Step 1: Navigate to the Home tab",
+      "Step 2: Pull down on the scroll view",
+      "Step 3: Verify a Liquid Glass progress indicator appears",
+      "Step 4: Verify all sections reload with fresh data",
+      "Step 5: Verify the refresh indicator dismisses when loading completes"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Search from Home tab finds shows and movies via TMDB search/multi endpoint",
+    "steps": [
+      "Step 1: Navigate to the Home tab",
+      "Step 2: Tap the search bar below the navigation bar",
+      "Step 3: Verify a full-screen search experience opens",
+      "Step 4: Type 'Breaking Bad' into the search field",
+      "Step 5: Verify results appear within 1 second",
+      "Step 6: Verify results show as show cards with poster, title, year, network",
+      "Step 7: Tap a result and verify navigation to Show Detail",
+      "Step 8: Return to search and verify 'Breaking Bad' appears in recent searches"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Search displays trending searches when the search field is empty",
+    "steps": [
+      "Step 1: Open the search screen",
+      "Step 2: Verify trending searches are displayed when the field is empty",
+      "Step 3: Tap a trending search term",
+      "Step 4: Verify the search executes and results are displayed"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Search debounces input at 300ms to avoid excessive API calls",
+    "steps": [
+      "Step 1: Open the search screen",
+      "Step 2: Type rapidly into the search field",
+      "Step 3: Verify the search does not fire on every keystroke",
+      "Step 4: Wait 300ms after stopping typing",
+      "Step 5: Verify results appear after the debounce period"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Show Detail page loads and displays all metadata from TMDB",
+    "steps": [
+      "Step 1: Search for a TV show (e.g., 'Severance')",
+      "Step 2: Tap the show in search results",
+      "Step 3: Verify the Show Detail page loads",
+      "Step 4: Verify hero backdrop image is displayed (16:9 with gradient fade)",
+      "Step 5: Verify title, year range, network, genres (as glass chips), TMDB rating, and airing status are shown",
+      "Step 6: Verify streaming availability links appear as Liquid Glass pills",
+      "Step 7: Verify a Save/status button is present",
+      "Step 8: Verify a season selector with horizontal glass pills is shown",
+      "Step 9: Verify the episode list for the first season loads with episode number, title, air date, comment count, and still image",
+      "Step 10: Verify switching seasons updates the episode list",
+      "Step 11: Tap an episode and verify navigation to the Episode Thread"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Show Detail page handles movies correctly with single-season single-episode normalization",
+    "steps": [
+      "Step 1: Search for a movie (e.g., 'Oppenheimer')",
+      "Step 2: Tap the movie in search results",
+      "Step 3: Verify the Show Detail page loads with movie metadata",
+      "Step 4: Verify there is no season selector or it shows a single season",
+      "Step 5: Verify there is exactly one episode entry representing the movie",
+      "Step 6: Tap the episode and verify the Episode Thread opens",
+      "Step 7: Verify the thread shows movie-appropriate metadata (runtime, release date)"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Season selector on Show Detail page switches between seasons and loads episodes",
+    "steps": [
+      "Step 1: Navigate to Show Detail for a multi-season show",
+      "Step 2: Verify Season 1 is selected by default",
+      "Step 3: Tap Season 2 in the horizontal glass pill selector",
+      "Step 4: Verify the episode list updates to show Season 2 episodes",
+      "Step 5: Verify episode stills are prefetched for the selected season",
+      "Step 6: Tap Season 1 again and verify the list reverts"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Streaming availability links display platform logos and open apps or web URLs",
+    "steps": [
+      "Step 1: Navigate to Show Detail for a popular show with streaming links",
+      "Step 2: Verify streaming platform logos appear as tappable Liquid Glass pills",
+      "Step 3: Verify the correct platforms are shown (e.g., Netflix, Hulu)",
+      "Step 4: Tap a streaming link",
+      "Step 5: Verify it attempts to open the app via universal link or falls back to web URL",
+      "Step 6: Verify streaming links are region-aware"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Episode Thread page loads with episode header, sort control, and comment tree",
+    "steps": [
+      "Step 1: Navigate to an Episode Thread from Show Detail",
+      "Step 2: Verify the episode header shows: still image, title, S/E label, air date, runtime",
+      "Step 3: Verify the overview is expandable (collapsed to 3 lines by default)",
+      "Step 4: Tap the overview to expand it and verify full text appears",
+      "Step 5: Verify the sort control is visible below the header (Liquid Glass segmented)",
+      "Step 6: Verify the comment tree loads below the sort control",
+      "Step 7: Verify the floating compose bar is visible at the bottom",
+      "Step 8: Verify the 'Where to Watch' streaming row is present (collapsed by default)",
+      "Step 9: Expand the streaming row and verify links appear",
+      "Step 10: Verify the default sort order is 'Hot'"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Comment tree renders nested comments with proper indentation up to depth 5",
+    "steps": [
+      "Step 1: Navigate to an Episode Thread with nested comments",
+      "Step 2: Verify top-level comments have 0pt indentation",
+      "Step 3: Verify reply comments are indented 16pt per nesting level",
+      "Step 4: Verify each comment shows: avatar (24pt), display name, karma badge, timestamp, body, vote arrows + score, reply button",
+      "Step 5: Verify nesting stops at depth 5 (max 80pt indentation)",
+      "Step 6: Verify deeply nested replies at depth 5+ do not indent further"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Collapsed thread indicator shows and expands additional replies",
+    "steps": [
+      "Step 1: Navigate to an Episode Thread with long comment chains",
+      "Step 2: Verify collapsed thread indicators appear (e.g., '12 more replies')",
+      "Step 3: Tap the collapsed indicator",
+      "Step 4: Verify the hidden replies expand and are visible",
+      "Step 5: Verify the expanded replies maintain proper nesting and indentation"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Posting a new top-level comment via the compose bar",
+    "steps": [
+      "Step 1: Navigate to an Episode Thread as an authenticated user",
+      "Step 2: Tap the floating compose bar ('Join the discussion...')",
+      "Step 3: Verify it expands into a full glass sheet with multiline text editor",
+      "Step 4: Type a comment text",
+      "Step 5: Tap the submit button",
+      "Step 6: Verify the sheet dismisses",
+      "Step 7: Verify the new comment appears in the thread with optimistic UI (<50ms)",
+      "Step 8: Verify the comment shows the user's avatar, name, karma, and timestamp",
+      "Step 9: Verify the comment count increments on the episode",
+      "Step 10: Verify the comment is persisted to Firestore",
+      "Step 11: Verify the comment appears when refreshing the thread"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Replying to an existing comment creates a nested reply",
+    "steps": [
+      "Step 1: Navigate to an Episode Thread with existing comments",
+      "Step 2: Tap the 'Reply' button on a comment",
+      "Step 3: Verify the composer opens pre-filled with parent context",
+      "Step 4: Type a reply",
+      "Step 5: Tap submit",
+      "Step 6: Verify the reply appears nested under the parent comment",
+      "Step 7: Verify the reply has depth = parent.depth + 1",
+      "Step 8: Verify proper indentation is applied"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Editing an existing comment updates the text and shows edited timestamp",
+    "steps": [
+      "Step 1: Navigate to a thread containing your own comment",
+      "Step 2: Long-press or use the edit action on your comment",
+      "Step 3: Verify the comment text is editable",
+      "Step 4: Modify the text and save",
+      "Step 5: Verify the comment displays the updated text",
+      "Step 6: Verify an 'edited' indicator appears with the edit timestamp",
+      "Step 7: Verify the edit is persisted to Firestore"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Deleting a comment marks it as deleted and preserves thread integrity",
+    "steps": [
+      "Step 1: Navigate to a thread containing your own comment",
+      "Step 2: Use the delete action on your comment",
+      "Step 3: Confirm the deletion",
+      "Step 4: Verify the comment body is replaced with '[deleted]' or similar",
+      "Step 5: Verify the comment's isDeleted flag is true in Firestore",
+      "Step 6: Verify replies to the deleted comment are still visible"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Upvoting a comment increments the score and updates karma",
+    "steps": [
+      "Step 1: Navigate to an Episode Thread with comments from other users",
+      "Step 2: Note the current net score on a comment",
+      "Step 3: Tap the upvote arrow",
+      "Step 4: Verify the net score increments by 1 (optimistic update <50ms)",
+      "Step 5: Verify a bounce animation plays on the upvote arrow",
+      "Step 6: Verify light haptic feedback is triggered",
+      "Step 7: Verify the commenter's karma increases by 1",
+      "Step 8: Verify a Vote document is created in Firestore with value=+1"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Downvoting a comment decrements the score and updates karma",
+    "steps": [
+      "Step 1: Navigate to an Episode Thread",
+      "Step 2: Tap the downvote arrow on a comment",
+      "Step 3: Verify the net score decrements by 1",
+      "Step 4: Verify a bounce animation and haptic play",
+      "Step 5: Verify the commenter's karma decreases by 1",
+      "Step 6: Verify a Vote document is created with value=-1"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Removing a vote by tapping the same arrow again returns to neutral",
+    "steps": [
+      "Step 1: Upvote a comment",
+      "Step 2: Verify the score is incremented",
+      "Step 3: Tap the upvote arrow again",
+      "Step 4: Verify the score returns to the original value",
+      "Step 5: Verify the Vote document is deleted from Firestore"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Switching vote from upvote to downvote correctly updates the score by -2",
+    "steps": [
+      "Step 1: Upvote a comment (score +1)",
+      "Step 2: Tap the downvote arrow",
+      "Step 3: Verify the net score changes by -2 from the upvoted state",
+      "Step 4: Verify the Vote document is updated to value=-1"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Users cannot vote on their own comments",
+    "steps": [
+      "Step 1: Post a comment in an Episode Thread",
+      "Step 2: Attempt to tap the upvote or downvote arrow on your own comment",
+      "Step 3: Verify the vote is not registered",
+      "Step 4: Verify the vote arrows are disabled or hidden for own comments"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Comment sort mode Hot orders by Wilson score weighted by recency",
+    "steps": [
+      "Step 1: Navigate to an Episode Thread with multiple comments",
+      "Step 2: Select 'Hot' sort mode",
+      "Step 3: Verify comments are ordered by a combination of upvotes and recency",
+      "Step 4: Verify a highly upvoted recent comment appears above an older equally-upvoted one",
+      "Step 5: Verify a new comment with few votes does not immediately jump to the top"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Comment sort mode Top orders by highest net upvotes with time sub-filters",
+    "steps": [
+      "Step 1: Select 'Top' sort mode",
+      "Step 2: Verify comments are ordered by highest net score (upvotes minus downvotes)",
+      "Step 3: Select sub-filter 'Today'",
+      "Step 4: Verify only comments from today are shown, ordered by score",
+      "Step 5: Select sub-filter 'This Week'",
+      "Step 6: Verify comments from the past 7 days, ordered by score",
+      "Step 7: Select sub-filter 'All Time'",
+      "Step 8: Verify all comments, ordered by score"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Comment sort mode New orders by reverse chronological",
+    "steps": [
+      "Step 1: Select 'New' sort mode",
+      "Step 2: Verify comments are ordered newest first",
+      "Step 3: Post a new comment",
+      "Step 4: Verify the new comment appears at the top of the list"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Comment sort mode Controversial surfaces divisive comments",
+    "steps": [
+      "Step 1: Select 'Controversial' sort mode",
+      "Step 2: Verify comments with high total votes but near-zero net score appear first",
+      "Step 3: Verify a comment with 50 upvotes and 49 downvotes ranks above a comment with 2 upvotes and 0 downvotes"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Spoiler tag syntax renders as blurred block and reveals on tap",
+    "steps": [
+      "Step 1: Post a comment containing >!spoiler text!< syntax",
+      "Step 2: Verify the spoiler text renders as a blurred/hidden block",
+      "Step 3: Tap the blurred block",
+      "Step 4: Verify the spoiler text is revealed",
+      "Step 5: Verify non-spoiler text around it renders normally"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Episode threads for recently aired episodes show a spoiler warning banner",
+    "steps": [
+      "Step 1: Navigate to an Episode Thread for an episode that aired less than 48 hours ago",
+      "Step 2: Verify a prominent spoiler warning banner is displayed at the top of the thread",
+      "Step 3: Navigate to an Episode Thread for an episode that aired more than 48 hours ago",
+      "Step 4: Verify no spoiler warning banner is shown"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Season-gated spoiler protection hides threads beyond the user's caught-up point",
+    "steps": [
+      "Step 1: Navigate to Profile > Settings > Spoiler Protection",
+      "Step 2: Set 'caught up through' to Season 2 Episode 5 for a show",
+      "Step 3: Navigate to the Show Detail for that show",
+      "Step 4: Verify episodes S2E6+ show a spoiler gate requiring confirmation",
+      "Step 5: Tap the gate and confirm to proceed",
+      "Step 6: Verify the Episode Thread loads after confirmation"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "My Shows tab displays saved shows grouped by status with correct segment control",
+    "steps": [
+      "Step 1: Save several shows with different statuses (Watching, Plan to Watch, Completed)",
+      "Step 2: Navigate to the My Shows tab",
+      "Step 3: Verify 'Currently Watching' is selected by default",
+      "Step 4: Verify shows with status 'watching' are listed",
+      "Step 5: Tap 'Plan to Watch' segment",
+      "Step 6: Verify shows with status 'planToWatch' are listed",
+      "Step 7: Tap 'Completed' segment",
+      "Step 8: Verify shows with status 'completed' are listed",
+      "Step 9: Verify each show card displays: poster, title, network, genre tags",
+      "Step 10: Verify 'Currently Watching' shows display next episode air date countdown",
+      "Step 11: Verify unread thread count badges are visible"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Adding a show to the watchlist from the search/add flow on My Shows tab",
+    "steps": [
+      "Step 1: Navigate to the My Shows tab",
+      "Step 2: Tap the search bar or the '+' FAB",
+      "Step 3: Search for a show (e.g., 'The Bear')",
+      "Step 4: Tap a result",
+      "Step 5: Verify a bottom sheet appears with status options: Watching, Plan to Watch, Completed",
+      "Step 6: Select 'Currently Watching'",
+      "Step 7: Verify the show appears in the Currently Watching list",
+      "Step 8: Verify a WatchlistEntry is created in Firestore",
+      "Step 9: Verify notifications are enabled by default for this show"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Adding a show to watchlist from the Show Detail page Save button",
+    "steps": [
+      "Step 1: Navigate to Show Detail for a show not yet saved",
+      "Step 2: Tap the 'Save to Watchlist' button",
+      "Step 3: Verify a status selection appears",
+      "Step 4: Select a status",
+      "Step 5: Verify the button changes to show the current status",
+      "Step 6: Navigate to My Shows and verify the show appears in the correct segment"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Quick-save via bookmark icon on show cards throughout the app",
+    "steps": [
+      "Step 1: Navigate to the Home tab",
+      "Step 2: Find a show card with a bookmark icon",
+      "Step 3: Tap the bookmark icon",
+      "Step 4: Verify a bounce animation and medium haptic feedback",
+      "Step 5: Verify the show is added to the watchlist with default status 'Currently Watching'",
+      "Step 6: Navigate to My Shows and verify the show appears"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Changing a show's watchlist status via long-press context menu",
+    "steps": [
+      "Step 1: Navigate to My Shows with a saved show",
+      "Step 2: Long-press the show card",
+      "Step 3: Verify a context menu appears with: Change Status, Mute Notifications, Remove",
+      "Step 4: Tap 'Change Status'",
+      "Step 5: Select a new status (e.g., 'Completed')",
+      "Step 6: Verify the show moves to the Completed segment with animation",
+      "Step 7: Verify the WatchlistEntry is updated in Firestore"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Removing a show from watchlist via swipe-left action",
+    "steps": [
+      "Step 1: Navigate to My Shows",
+      "Step 2: Swipe left on a show card",
+      "Step 3: Verify a red 'Remove' action appears",
+      "Step 4: Tap Remove",
+      "Step 5: Verify haptic confirmation",
+      "Step 6: Verify the show is removed from the list",
+      "Step 7: Verify the WatchlistEntry is deleted from Firestore",
+      "Step 8: Verify the user is unsubscribed from notifications for this show"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "My Shows sort by Most Recent Activity, Alphabetical, and Next Airing",
+    "steps": [
+      "Step 1: Save 5+ shows to watchlist",
+      "Step 2: Open the sort dropdown on My Shows",
+      "Step 3: Select 'Most Recent Activity' and verify shows are sorted by newest thread activity",
+      "Step 4: Select 'Alphabetical' and verify A\u2013Z order",
+      "Step 5: Select 'Next Airing' and verify shows with soonest upcoming episodes are first"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "My Shows empty state when no shows are saved",
+    "steps": [
+      "Step 1: Sign in with a fresh account",
+      "Step 2: Navigate to the My Shows tab",
+      "Step 3: Verify an illustration and text 'Your watchlist is empty' are displayed",
+      "Step 4: Verify a prominent search button is shown",
+      "Step 5: Tap the search button and verify the search flow opens"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "My Shows empty state for specific status segment",
+    "steps": [
+      "Step 1: Save shows only in 'Currently Watching' status",
+      "Step 2: Navigate to My Shows and tap 'Plan to Watch'",
+      "Step 3: Verify 'No shows here yet.' text is displayed",
+      "Step 4: Tap 'Completed' and verify the same empty state"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Profile screen displays user header with avatar, name, bio, karma, and stats",
+    "steps": [
+      "Step 1: Sign in and navigate to the Profile tab",
+      "Step 2: Verify the avatar is displayed as an 80pt circular image",
+      "Step 3: Verify the display name is shown",
+      "Step 4: Verify the bio is displayed (or placeholder if empty)",
+      "Step 5: Verify the karma score is shown with an upvote icon",
+      "Step 6: Verify the joined date is shown",
+      "Step 7: Verify the show count is shown (e.g., 'Tracking 12 shows')"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Editing profile display name with validation",
+    "steps": [
+      "Step 1: Navigate to Profile",
+      "Step 2: Tap the display name to edit",
+      "Step 3: Enter a new valid name (3\u201320 chars, alphanumeric + underscores)",
+      "Step 4: Save and verify the name updates",
+      "Step 5: Try entering an invalid name (<3 chars or special characters)",
+      "Step 6: Verify validation error is shown",
+      "Step 7: Try entering a name that's already taken",
+      "Step 8: Verify uniqueness error is shown"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Editing profile bio with 160 character limit",
+    "steps": [
+      "Step 1: Navigate to Profile",
+      "Step 2: Tap the bio to edit",
+      "Step 3: Enter text under 160 characters and save",
+      "Step 4: Verify the bio updates",
+      "Step 5: Try entering text over 160 characters",
+      "Step 6: Verify input is truncated or limited at 160 characters"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Changing profile avatar via camera, photo library, or curated defaults",
+    "steps": [
+      "Step 1: Navigate to Profile",
+      "Step 2: Tap the avatar image",
+      "Step 3: Verify options appear: camera, photo library, curated defaults",
+      "Step 4: Select a curated default avatar",
+      "Step 5: Verify the avatar updates immediately",
+      "Step 6: Verify the new avatar URL is saved to Firestore"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Karma breakdown tooltip shows total upvotes, downvotes, and net",
+    "steps": [
+      "Step 1: Navigate to Profile",
+      "Step 2: Tap the karma score",
+      "Step 3: Verify a breakdown tooltip appears showing total upvotes received, total downvotes received, and net karma",
+      "Step 4: Verify the numbers are consistent"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Comment history on Profile shows paginated comments with navigation to threads",
+    "steps": [
+      "Step 1: Post several comments in different episode threads",
+      "Step 2: Navigate to Profile > Comment History",
+      "Step 3: Verify comments are listed most recent first",
+      "Step 4: Verify each row shows: show title, episode label, comment preview (2 lines), timestamp, net votes",
+      "Step 5: Tap a comment and verify navigation to the episode thread",
+      "Step 6: Verify the thread scrolls to the tapped comment",
+      "Step 7: Scroll down the comment history and verify pagination loads more comments"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "In-app notifications appear for replies to user's comments",
+    "steps": [
+      "Step 1: Post a comment in a thread",
+      "Step 2: Have another user reply to your comment",
+      "Step 3: Navigate to Profile > Notifications",
+      "Step 4: Verify a notification appears for the reply",
+      "Step 5: Verify the notification is grouped by show",
+      "Step 6: Tap the notification and verify navigation to the comment",
+      "Step 7: Verify the badge on the Profile tab clears after reading"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Push notification for new episode thread on followed show",
+    "steps": [
+      "Step 1: Follow a show that is currently airing",
+      "Step 2: Simulate a new episode being added via the Cloud Function",
+      "Step 3: Verify a push notification is delivered with the correct content",
+      "Step 4: Tap the push notification",
+      "Step 5: Verify the app opens and deep-links to the new episode thread"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Notification preferences allow toggling replies, new episodes, trending, and karma",
+    "steps": [
+      "Step 1: Navigate to Profile > Settings > Notification Preferences",
+      "Step 2: Toggle off 'Replies'",
+      "Step 3: Have another user reply to your comment",
+      "Step 4: Verify no push or in-app notification is generated for the reply",
+      "Step 5: Toggle 'Replies' back on",
+      "Step 6: Verify notifications resume for new replies"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Per-show notification muting via My Shows context menu",
+    "steps": [
+      "Step 1: Long-press a show in My Shows",
+      "Step 2: Tap 'Mute Notifications'",
+      "Step 3: Verify the show remains in the watchlist but notifications are disabled",
+      "Step 4: Verify no push notifications for new episodes of this show",
+      "Step 5: Verify the mute is reflected in WatchlistEntry.notificationsEnabled=false"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Quiet hours setting blocks notifications during configured time window",
+    "steps": [
+      "Step 1: Navigate to Settings > Notifications > Quiet Hours",
+      "Step 2: Set quiet hours from 10 PM to 7 AM",
+      "Step 3: Simulate a notification trigger during quiet hours",
+      "Step 4: Verify the notification is not delivered during quiet hours",
+      "Step 5: Verify the notification is delivered after quiet hours end"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Appearance setting switches between system, light, and dark mode",
+    "steps": [
+      "Step 1: Navigate to Profile > Settings > Appearance",
+      "Step 2: Select 'Dark' mode",
+      "Step 3: Verify the entire app switches to dark mode",
+      "Step 4: Select 'Light' mode and verify light appearance",
+      "Step 5: Select 'System' and verify it follows the device setting"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Sign out flow clears session and returns to unauthenticated state",
+    "steps": [
+      "Step 1: Sign in to the app",
+      "Step 2: Navigate to Profile > Settings > Account > Sign Out",
+      "Step 3: Confirm sign out",
+      "Step 4: Verify the app returns to the unauthenticated state",
+      "Step 5: Verify the Profile tab shows sign-in options",
+      "Step 6: Verify cached user-specific data is cleared"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Delete account flow removes all user data and anonymizes comments",
+    "steps": [
+      "Step 1: Sign in and post some comments",
+      "Step 2: Navigate to Profile > Settings > Account > Delete Account",
+      "Step 3: Confirm deletion",
+      "Step 4: Verify the UserProfile is deleted from Firestore",
+      "Step 5: Verify WatchlistEntries are deleted",
+      "Step 6: Verify comments are anonymized (author info cleared) but comment text preserved for thread integrity",
+      "Step 7: Verify the user is signed out"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Reporting a comment with category selection",
+    "steps": [
+      "Step 1: Long-press a comment in a thread",
+      "Step 2: Tap 'Report'",
+      "Step 3: Verify report categories appear: spam, harassment, spoilers, off-topic",
+      "Step 4: Select a category and confirm",
+      "Step 5: Verify a report is submitted",
+      "Step 6: Verify the user sees a confirmation message"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Muting a user hides all their comments from the muter's view",
+    "steps": [
+      "Step 1: Navigate to a thread with comments from a specific user",
+      "Step 2: Long-press a comment from that user",
+      "Step 3: Tap 'Mute User'",
+      "Step 4: Verify all comments from that user disappear from the thread",
+      "Step 5: Navigate to a different thread and verify comments from the muted user are hidden there too"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Blocking a user prevents them from replying to the blocker's comments",
+    "steps": [
+      "Step 1: Block a user via the mute/block flow",
+      "Step 2: Verify all of the blocked user's comments are hidden",
+      "Step 3: Simulate the blocked user trying to reply to the blocker's comment",
+      "Step 4: Verify Firestore security rules prevent the reply from being written"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Perspective API toxicity filter holds high-toxicity comments for review",
+    "steps": [
+      "Step 1: Submit a comment with clearly toxic content",
+      "Step 2: Verify the comment is flagged by Perspective API (score > 0.8)",
+      "Step 3: Verify the comment is not published to the thread",
+      "Step 4: Verify the comment is queued for moderator review"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Real-time comments appear in the thread without manual refresh",
+    "steps": [
+      "Step 1: Open an Episode Thread on Device A",
+      "Step 2: Post a new comment from Device B in the same thread",
+      "Step 3: Verify the comment appears on Device A in real-time via Firestore listener",
+      "Step 4: Verify the comment slides in with a move + opacity animation"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Real-time vote count updates on comments without refresh",
+    "steps": [
+      "Step 1: Open a thread with comments",
+      "Step 2: Have another user upvote a comment",
+      "Step 3: Verify the vote count updates in real-time on the viewer's screen"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Offline browsing of previously visited shows and cached metadata",
+    "steps": [
+      "Step 1: Visit a Show Detail page and several episode threads while online",
+      "Step 2: Disable network connectivity",
+      "Step 3: Navigate to My Shows and verify the watchlist loads from SwiftData cache",
+      "Step 4: Tap a cached show and verify Show Detail loads with cached metadata and images",
+      "Step 5: Verify a staleness indicator is shown",
+      "Step 6: Navigate to a cached episode thread and verify comments are visible (cached)"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Offline comment drafts are persisted and synced when connectivity returns",
+    "steps": [
+      "Step 1: Disable network connectivity",
+      "Step 2: Open the compose bar in an Episode Thread",
+      "Step 3: Type a comment and tap submit",
+      "Step 4: Verify the draft is saved locally",
+      "Step 5: Re-enable network connectivity",
+      "Step 6: Verify the comment is automatically submitted to Firestore",
+      "Step 7: Verify the comment appears in the thread"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Offline votes are queued and replayed when connectivity returns",
+    "steps": [
+      "Step 1: Disable network connectivity",
+      "Step 2: Upvote a cached comment",
+      "Step 3: Verify the vote is reflected optimistically in the UI",
+      "Step 4: Re-enable network connectivity",
+      "Step 5: Verify the Vote is synced to Firestore"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "TMDB data caching with 6-hour TTL and stale refresh",
+    "steps": [
+      "Step 1: Visit a Show Detail page (data is cached)",
+      "Step 2: Verify the data loads from cache on subsequent visits within 6 hours",
+      "Step 3: Wait or simulate 6+ hours since lastRefreshed",
+      "Step 4: Visit the Show Detail page again",
+      "Step 5: Verify a background refresh is triggered from TMDB",
+      "Step 6: Verify the UI updates with fresh data"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "TMDB API failure gracefully degrades to cached data with banner",
+    "steps": [
+      "Step 1: Visit a show to cache its data",
+      "Step 2: Simulate a TMDB API failure",
+      "Step 3: Navigate to the show again",
+      "Step 4: Verify cached data is displayed",
+      "Step 5: Verify a 'Content may be outdated' banner appears"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Deep link showthread://show/{tmdbId}/season/{n}/episode/{n} opens correct thread",
+    "steps": [
+      "Step 1: Open a deep link URL in the format showthread://show/1399/season/5/episode/14",
+      "Step 2: Verify the app launches (or foregrounds)",
+      "Step 3: Verify the Episode Thread for the specified episode opens",
+      "Step 4: Verify the correct show, season, and episode content is displayed"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Push notification deep-link navigates to the correct comment in a thread",
+    "steps": [
+      "Step 1: Receive a push notification for a reply to your comment",
+      "Step 2: Tap the notification",
+      "Step 3: Verify the app opens the Episode Thread containing the reply",
+      "Step 4: Verify the thread scrolls to the reply comment"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Comment pagination loads batches of 50 comments with cursor-based queries",
+    "steps": [
+      "Step 1: Navigate to an Episode Thread with 100+ comments",
+      "Step 2: Verify the initial batch of 50 comments loads",
+      "Step 3: Scroll to the bottom of the loaded comments",
+      "Step 4: Verify the next batch of 50 comments loads automatically",
+      "Step 5: Verify no duplicate comments appear"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Watchlist bidirectional sync between SwiftData and Firestore",
+    "steps": [
+      "Step 1: Add a show to watchlist on Device A",
+      "Step 2: Open the app on Device B (same account)",
+      "Step 3: Verify the show appears in My Shows on Device B",
+      "Step 4: Change the show's status on Device B",
+      "Step 5: Verify the status change appears on Device A"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Show Detail Save button reflects current watchlist status with dropdown to change",
+    "steps": [
+      "Step 1: Save a show as 'Currently Watching'",
+      "Step 2: Navigate to that show's Detail page",
+      "Step 3: Verify the Save button shows the current status 'Watching'",
+      "Step 4: Tap the button to open the status dropdown",
+      "Step 5: Change to 'Completed'",
+      "Step 6: Verify the button updates to show 'Completed'"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "About section displays correct TMDB and JustWatch attribution",
+    "steps": [
+      "Step 1: Navigate to Profile > Settings > About",
+      "Step 2: Verify the TMDB attribution is displayed: 'This product uses the TMDB API but is not endorsed or certified by TMDB'",
+      "Step 3: Verify the streaming data attribution is displayed: 'Streaming data provided by JustWatch via TMDB'",
+      "Step 4: Verify the app version number is shown",
+      "Step 5: Verify open source licenses are accessible"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Long-press on Home tab show card shows preview context menu",
+    "steps": [
+      "Step 1: Navigate to the Home tab",
+      "Step 2: Long-press a show card",
+      "Step 3: Verify a context menu appears with: Save, Open, Share options",
+      "Step 4: Tap 'Open' and verify navigation to Show Detail",
+      "Step 5: Return and long-press again, tap 'Save' and verify the show is added to watchlist"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Season progress indicator shows discussed episodes count on My Shows cards",
+    "steps": [
+      "Step 1: Save a show and visit some of its episode threads",
+      "Step 2: Navigate to My Shows",
+      "Step 3: Verify the show card displays progress like '5 of 10 episodes discussed'"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Next episode countdown display on My Shows for currently airing shows",
+    "steps": [
+      "Step 1: Save a currently airing show",
+      "Step 2: Navigate to My Shows > Currently Watching",
+      "Step 3: Verify the show card displays a countdown like 'New episode in 3 days'"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Compose bar spoiler tag button wraps selected text in spoiler syntax",
+    "steps": [
+      "Step 1: Open the compose sheet in an Episode Thread",
+      "Step 2: Type some text",
+      "Step 3: Select a portion of the text",
+      "Step 4: Tap the spoiler tag button",
+      "Step 5: Verify the selected text is wrapped in >!...!< syntax",
+      "Step 6: Submit the comment and verify the spoiler renders as a blurred block"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Karma milestone notification at 100, 500, and 1000 karma",
+    "steps": [
+      "Step 1: Accumulate karma to just below 100",
+      "Step 2: Receive an upvote that pushes karma to 100",
+      "Step 3: Verify a karma milestone notification is generated",
+      "Step 4: Verify the notification text is appropriate (e.g., 'You just hit 100 karma!')"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "TMDB append_to_response batches season data in a single API call",
+    "steps": [
+      "Step 1: Navigate to a show with 5 seasons",
+      "Step 2: Monitor network requests",
+      "Step 3: Verify only 1 API call is made (not 5 separate season calls)",
+      "Step 4: Verify all 5 seasons' data is included via append_to_response"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Image prefetching loads episode stills when a season is selected",
+    "steps": [
+      "Step 1: Navigate to Show Detail",
+      "Step 2: Select a season",
+      "Step 3: Monitor image loading",
+      "Step 4: Verify Kingfisher prefetches still images for all episodes in that season",
+      "Step 5: Scroll through the episode list and verify stills load without delay"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "New episode detection via Cloud Function creates thread and sends push",
+    "steps": [
+      "Step 1: Follow an airing show",
+      "Step 2: Simulate the Cloud Function detecting a new episode from TMDB",
+      "Step 3: Verify a new Episode document is created in Firestore",
+      "Step 4: Verify a push notification is sent to followers",
+      "Step 5: Verify the new episode thread appears in the Home feed and Show Detail"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Firestore security rules enforce one vote per user per comment",
+    "steps": [
+      "Step 1: Upvote a comment",
+      "Step 2: Attempt to create a second Vote document for the same comment",
+      "Step 3: Verify Firestore security rules reject the duplicate vote write"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Firestore security rules prevent users from editing other users' comments",
+    "steps": [
+      "Step 1: User A posts a comment",
+      "Step 2: User B attempts to update the comment document in Firestore",
+      "Step 3: Verify the write is rejected by security rules"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Trending notification for watchlist shows with high activity",
+    "steps": [
+      "Step 1: Follow a show",
+      "Step 2: Simulate high comment activity on an episode thread (247+ new comments)",
+      "Step 3: Verify a trending notification is generated",
+      "Step 4: Verify the notification text mentions the comment count"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Recent searches persist locally and display on subsequent search opens",
+    "steps": [
+      "Step 1: Search for 'Breaking Bad' and close the search",
+      "Step 2: Search for 'Severance' and close the search",
+      "Step 3: Open the search screen again",
+      "Step 4: Verify 'Breaking Bad' and 'Severance' appear in recent searches",
+      "Step 5: Verify recent searches are ordered most recent first"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "My Shows show card tap navigates to Show Detail",
+    "steps": [
+      "Step 1: Navigate to My Shows with saved shows",
+      "Step 2: Tap a show card",
+      "Step 3: Verify navigation to the Show Detail page for that show",
+      "Step 4: Verify all metadata loads correctly"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Tab bar uses Liquid Glass styling and shrinks on scroll / expands on scroll-up",
+    "steps": [
+      "Step 1: Navigate to the Home tab",
+      "Step 2: Verify the tab bar at the bottom has Liquid Glass translucent appearance",
+      "Step 3: Scroll down on the Home feed",
+      "Step 4: Verify the tab bar shrinks/collapses during scroll",
+      "Step 5: Scroll back up",
+      "Step 6: Verify the tab bar expands fluidly"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Navigation bar uses large title on root views and collapses to inline on scroll",
+    "steps": [
+      "Step 1: Navigate to the Home tab",
+      "Step 2: Verify the navigation title is displayed in large format",
+      "Step 3: Scroll down",
+      "Step 4: Verify the title collapses to inline format",
+      "Step 5: Check the same behavior on My Shows and Profile tabs"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Sort selector uses Liquid Glass segmented control with sliding pill highlight",
+    "steps": [
+      "Step 1: Navigate to an Episode Thread",
+      "Step 2: Verify the sort control appears as a Liquid Glass segmented control",
+      "Step 3: Tap different sort options (Hot, Top, New, Controversial)",
+      "Step 4: Verify the glass pill highlight slides smoothly between options",
+      "Step 5: Verify .glassEffect() styling is applied"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Compose bar uses floating Liquid Glass styling and morphs into full sheet",
+    "steps": [
+      "Step 1: Navigate to an Episode Thread",
+      "Step 2: Verify the compose bar at the bottom has Liquid Glass floating appearance",
+      "Step 3: Tap the compose bar",
+      "Step 4: Verify it morphs/expands into a full glass sheet with GlassEffectContainer animation",
+      "Step 5: Dismiss the sheet and verify smooth collapse back to the bar"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Streaming availability chips use Liquid Glass .buttonStyle(.glass)",
+    "steps": [
+      "Step 1: Navigate to a Show Detail page with streaming links",
+      "Step 2: Verify streaming platform logos appear as Liquid Glass pills",
+      "Step 3: Verify .buttonStyle(.glass) styling is applied with translucent appearance",
+      "Step 4: Tap a chip and verify interactive glass behavior"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Vote arrows use glass circles with interactive ripple on tap",
+    "steps": [
+      "Step 1: Navigate to an Episode Thread",
+      "Step 2: Verify vote arrows are styled with subtle Liquid Glass circles",
+      "Step 3: Tap an upvote arrow",
+      "Step 4: Verify a ripple/bounce animation plays (.symbolEffect(.bounce))",
+      "Step 5: Verify haptic feedback fires (UIImpactFeedbackGenerator .light)"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Season picker uses horizontal scroll of Liquid Glass pills",
+    "steps": [
+      "Step 1: Navigate to Show Detail for a multi-season show",
+      "Step 2: Verify season pills are displayed horizontally with glass styling",
+      "Step 3: Verify the selected season pill is more opaque than others",
+      "Step 4: Tap a different season pill and verify the selection animates via glassEffectID"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "My Shows FAB (floating action button) uses Liquid Glass circular style",
+    "steps": [
+      "Step 1: Navigate to the My Shows tab",
+      "Step 2: Verify a circular '+' floating action button is visible",
+      "Step 3: Verify it uses .glassEffect(.interactive) styling",
+      "Step 4: Tap it and verify it triggers the search/add flow"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "My Shows status segments use Liquid Glass segmented control",
+    "steps": [
+      "Step 1: Navigate to the My Shows tab",
+      "Step 2: Verify the status selector (Watching, Plan to Watch, Completed) uses Liquid Glass styling",
+      "Step 3: Tap between segments and verify smooth glass transition"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Dark mode renders all views correctly with semantic colors",
+    "steps": [
+      "Step 1: Enable dark mode in Settings > Appearance",
+      "Step 2: Navigate through Home, My Shows, and Profile tabs",
+      "Step 3: Verify all backgrounds use system dark colors",
+      "Step 4: Verify text uses .label semantic color (white in dark mode)",
+      "Step 5: Verify cards use .secondarySystemGroupedBackground",
+      "Step 6: Verify Liquid Glass elements maintain translucency in dark mode",
+      "Step 7: Verify the accent color (#6C5CE7) is visible and correct",
+      "Step 8: Navigate to Show Detail and Episode Thread and verify dark mode",
+      "Step 9: Verify no hardcoded colors appear (no white-on-white or black-on-black)"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Light mode renders all views correctly with semantic colors",
+    "steps": [
+      "Step 1: Enable light mode in Settings > Appearance",
+      "Step 2: Navigate through all tabs and screens",
+      "Step 3: Verify backgrounds, text, cards, and accent colors are correct in light mode",
+      "Step 4: Verify Liquid Glass translucency looks correct against light backgrounds"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Show Detail hero backdrop uses 16:9 aspect ratio with gradient fade",
+    "steps": [
+      "Step 1: Navigate to a Show Detail page",
+      "Step 2: Verify the hero image is in 16:9 aspect ratio",
+      "Step 3: Verify there is a gradient fade from the image to the background color",
+      "Step 4: Verify the gradient works correctly in both light and dark modes"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Genre tags on Show Detail appear as Liquid Glass chips",
+    "steps": [
+      "Step 1: Navigate to Show Detail for a show with multiple genres",
+      "Step 2: Verify genres are displayed as horizontal glass-styled chips",
+      "Step 3: Verify chips have appropriate padding and spacing"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Comment cards use 8pt corner radius and proper spacing",
+    "steps": [
+      "Step 1: Navigate to an Episode Thread with comments",
+      "Step 2: Verify comment cards have 8pt corner radius",
+      "Step 3: Verify 16pt horizontal padding and 12pt vertical spacing between comments",
+      "Step 4: Verify comment indentation is 16pt per nesting level"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Show cards use 12pt corner radius throughout the app",
+    "steps": [
+      "Step 1: Navigate to the Home tab and inspect show cards",
+      "Step 2: Verify show cards have 12pt corner radius",
+      "Step 3: Navigate to My Shows and verify same card styling",
+      "Step 4: Navigate to search results and verify same styling"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Avatar sizes are consistent: 80pt on Profile, 40pt on detail, 24pt inline",
+    "steps": [
+      "Step 1: Navigate to Profile and verify avatar is 80pt circular",
+      "Step 2: Navigate to Show Detail and verify any user avatars are 40pt",
+      "Step 3: Navigate to an Episode Thread and verify comment avatars are 24pt"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Typography follows SF Pro system font with correct Dynamic Type styles",
+    "steps": [
+      "Step 1: Navigate through all screens",
+      "Step 2: Verify show titles use .title2 .bold",
+      "Step 3: Verify episode titles use .headline",
+      "Step 4: Verify comment body uses .body",
+      "Step 5: Verify metadata (timestamps, karma) uses .caption .medium with .secondaryLabel color"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "All touch targets meet Apple HIG minimum of 44\u00d744pt",
+    "steps": [
+      "Step 1: Navigate to an Episode Thread",
+      "Step 2: Verify vote arrows have at least 44\u00d744pt tap area",
+      "Step 3: Verify reply buttons have at least 44\u00d744pt tap area",
+      "Step 4: Verify tab bar buttons meet the minimum",
+      "Step 5: Verify streaming chips meet the minimum",
+      "Step 6: Verify navigation back buttons meet the minimum"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Upvote animation uses .symbolEffect(.bounce) with correct haptic",
+    "steps": [
+      "Step 1: Navigate to a thread and upvote a comment",
+      "Step 2: Verify the upvote arrow icon bounces (.symbolEffect(.bounce))",
+      "Step 3: Verify UIImpactFeedbackGenerator fires with .light intensity",
+      "Step 4: Downvote and verify the same animation pattern on the downvote arrow"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Save show animation uses .symbolEffect(.bounce) with medium haptic",
+    "steps": [
+      "Step 1: Tap the bookmark icon on a show card to save",
+      "Step 2: Verify the bookmark icon bounces",
+      "Step 3: Verify UIImpactFeedbackGenerator fires with .medium intensity"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "New comment real-time animation uses move + opacity with spring",
+    "steps": [
+      "Step 1: Open a thread and have a new comment arrive in real-time",
+      "Step 2: Verify the comment slides in from the top (.transition(.move(edge: .top)))",
+      "Step 3: Verify the comment fades in (.opacity) simultaneously",
+      "Step 4: Verify the animation uses a spring curve"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Sort mode change uses .contentTransition(.symbolEffect(.replace)) on icons",
+    "steps": [
+      "Step 1: Navigate to a thread sort control",
+      "Step 2: Switch between sort modes",
+      "Step 3: Verify the sort icons transition smoothly using symbol replacement effect"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Navigation transition from show card to Show Detail uses matchedGeometryEffect",
+    "steps": [
+      "Step 1: Navigate to Home and identify a show card",
+      "Step 2: Tap the card",
+      "Step 3: Verify the poster/image animates seamlessly from the card to the hero on Show Detail",
+      "Step 4: Tap back and verify the reverse animation"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Episode thread overview is collapsed to 3 lines with expand/collapse behavior",
+    "steps": [
+      "Step 1: Navigate to an Episode Thread with a long overview",
+      "Step 2: Verify the overview text is truncated to 3 lines by default",
+      "Step 3: Tap to expand and verify full text is shown",
+      "Step 4: Tap again to collapse and verify it returns to 3 lines"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Spoiler-tagged text renders as visually blurred block distinct from regular text",
+    "steps": [
+      "Step 1: View a comment with spoiler-tagged text",
+      "Step 2: Verify the spoiler portion is visually blurred/hidden",
+      "Step 3: Verify non-spoiler text around it renders normally",
+      "Step 4: Tap the blurred block and verify it reveals with animation",
+      "Step 5: Verify the revealed text is styled consistently with the rest of the comment"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Spoiler warning banner on recent episodes is prominent and clearly visible",
+    "steps": [
+      "Step 1: Navigate to a thread for an episode aired <48 hours ago",
+      "Step 2: Verify a prominent spoiler warning banner appears at the top",
+      "Step 3: Verify the banner uses warning-appropriate colors and is hard to miss"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Empty state illustrations and text are properly centered and styled",
+    "steps": [
+      "Step 1: View My Shows with no saved shows",
+      "Step 2: Verify the illustration is centered",
+      "Step 3: Verify the text 'Your watchlist is empty' is centered below",
+      "Step 4: Verify the search button is prominent",
+      "Step 5: View a status segment with no shows and verify 'No shows here yet.' text"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Unread badges on show cards and notification tabs are visually consistent",
+    "steps": [
+      "Step 1: Ensure there are unread notifications and unread thread counts",
+      "Step 2: Verify badge styling is consistent across My Shows cards and Profile tab icon",
+      "Step 3: Verify badges use the accent color (#6C5CE7)",
+      "Step 4: Verify badges have appropriate size and positioning"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Pull-to-refresh uses Liquid Glass progress indicator",
+    "steps": [
+      "Step 1: Pull down on the Home feed",
+      "Step 2: Verify the refresh indicator uses Liquid Glass styling",
+      "Step 3: Verify it animates smoothly during loading",
+      "Step 4: Verify it dismisses cleanly when refresh completes"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Reduce Transparency accessibility setting replaces glass with opaque backgrounds",
+    "steps": [
+      "Step 1: Enable 'Reduce Transparency' in device Settings > Accessibility",
+      "Step 2: Launch the app",
+      "Step 3: Verify all Liquid Glass elements render with solid opaque backgrounds",
+      "Step 4: Verify all controls remain functional",
+      "Step 5: Verify readability is maintained or improved"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Dynamic Type scaling from xSmall to AX5 renders all text correctly",
+    "steps": [
+      "Step 1: Set device text size to xSmall",
+      "Step 2: Navigate through all screens and verify text is readable and properly sized",
+      "Step 3: Set text size to the largest accessibility size (AX5)",
+      "Step 4: Navigate through all screens",
+      "Step 5: Verify text scales up correctly",
+      "Step 6: Verify glass containers resize fluidly to accommodate larger text",
+      "Step 7: Verify no text truncation that makes content unreadable",
+      "Step 8: Verify comment cards, show cards, and profile elements adapt gracefully"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "VoiceOver navigation works correctly on all primary flows",
+    "steps": [
+      "Step 1: Enable VoiceOver",
+      "Step 2: Navigate from Home to a show card",
+      "Step 3: Verify the show card has a descriptive accessibilityLabel (title, network)",
+      "Step 4: Navigate to Show Detail and verify all elements are accessible",
+      "Step 5: Navigate to an Episode Thread",
+      "Step 6: Verify each comment is accessible with author, body, vote count, and actions",
+      "Step 7: Verify vote buttons have accessibilityHint describing the action",
+      "Step 8: Navigate through the compose flow with VoiceOver",
+      "Step 9: Navigate to My Shows and Profile tabs",
+      "Step 10: Verify all interactive elements are reachable and described",
+      "Step 11: Verify VoiceOver rotor supports heading navigation for top-level comments"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Reduce Motion accessibility replaces spring animations with easeInOut",
+    "steps": [
+      "Step 1: Enable 'Reduce Motion' in device accessibility settings",
+      "Step 2: Upvote a comment and verify no bounce animation (symbol effects suppressed)",
+      "Step 3: Navigate between screens and verify transitions use .easeInOut(0.25)",
+      "Step 4: Open the compose bar and verify no morph animation, just a simple transition"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Minimum 4.5:1 contrast ratio maintained on all text across light and dark modes",
+    "steps": [
+      "Step 1: Run Accessibility Inspector on all screens in light mode",
+      "Step 2: Verify primary text (.label) meets 4.5:1 against background",
+      "Step 3: Verify secondary text (.secondaryLabel) meets 4.5:1",
+      "Step 4: Switch to dark mode and repeat contrast checks",
+      "Step 5: Verify text on Liquid Glass elements meets contrast requirements"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Poster images use correct TMDB sizes: w342 for lists, w500 for detail",
+    "steps": [
+      "Step 1: Navigate to search results or episode lists",
+      "Step 2: Inspect network requests and verify poster images use w342 size",
+      "Step 3: Navigate to Show Detail",
+      "Step 4: Verify the poster uses w500 size"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Backdrop images use w780 for hero and w300 for cards",
+    "steps": [
+      "Step 1: Navigate to Show Detail",
+      "Step 2: Verify the hero backdrop loads as w780",
+      "Step 3: Navigate to Home feed trending cards",
+      "Step 4: Verify card backdrops use w300"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Image placeholders show shimmer effect during loading",
+    "steps": [
+      "Step 1: Navigate to a screen with images on a slow connection",
+      "Step 2: Verify placeholder views display a shimmer/skeleton animation",
+      "Step 3: Verify images replace placeholders smoothly once loaded"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Swipe-to-delete on My Shows reveals red Remove action with smooth animation",
+    "steps": [
+      "Step 1: Navigate to My Shows",
+      "Step 2: Swipe left on a show card",
+      "Step 3: Verify a red 'Remove' action slides in from the right",
+      "Step 4: Verify the swipe animation is smooth"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Status change animation on My Shows moves card to new segment smoothly",
+    "steps": [
+      "Step 1: Change a show's status via context menu",
+      "Step 2: Verify the show card animates out of the current list",
+      "Step 3: Switch to the new status segment",
+      "Step 4: Verify the show appears in the new segment"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Profile avatar is displayed as a circular 80pt image with tap-to-change indicator",
+    "steps": [
+      "Step 1: Navigate to the Profile tab",
+      "Step 2: Verify the avatar is displayed as a circle (not square or rounded rect)",
+      "Step 3: Verify the diameter is 80pt",
+      "Step 4: Verify there is a visual indicator that the avatar is tappable (e.g., camera icon overlay)"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Karma badge styling next to display name in comments uses accent color",
+    "steps": [
+      "Step 1: View comments in a thread",
+      "Step 2: Verify each comment shows the author's karma next to their name",
+      "Step 3: Verify the karma badge uses the accent color (#6C5CE7) styling"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Notification badge on Profile tab shows unread count with accent color",
+    "steps": [
+      "Step 1: Ensure there are unread notifications",
+      "Step 2: Verify the Profile tab icon shows a badge with the unread count",
+      "Step 3: Verify the badge uses the accent color",
+      "Step 4: Read all notifications and verify the badge disappears"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Show Detail episode list rows display episode number, title, air date, comment count, and still image",
+    "steps": [
+      "Step 1: Navigate to Show Detail and select a season",
+      "Step 2: Verify each episode row contains: episode number, title, air date, comment count badge, and a still image thumbnail",
+      "Step 3: Verify the layout is consistent and well-spaced"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Trending Now carousel cards on Home display backdrop, title, episode label, and comment badge",
+    "steps": [
+      "Step 1: Navigate to Home tab",
+      "Step 2: Verify each trending card shows: backdrop image, show title overlaid, episode label, and comment count badge",
+      "Step 3: Verify cards scroll horizontally with smooth momentum"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Context menu on long-press uses native UIKit context menu styling",
+    "steps": [
+      "Step 1: Long-press a show card on Home",
+      "Step 2: Verify the context menu appears with native iOS styling",
+      "Step 3: Verify menu items are clearly labeled with appropriate icons",
+      "Step 4: Long-press a comment in a thread and verify context menu styling"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Comment depth visualization clearly distinguishes nesting levels",
+    "steps": [
+      "Step 1: View a thread with comments nested to depth 3+",
+      "Step 2: Verify each nesting level is visually distinguishable (indentation + optional thread line)",
+      "Step 3: Verify the hierarchy is clear at a glance"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Search results display show cards with poster, title, year, and network",
+    "steps": [
+      "Step 1: Search for a term that returns multiple results",
+      "Step 2: Verify each result card shows: poster thumbnail, show title, year, and network",
+      "Step 3: Verify cards are consistently styled and well-spaced"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "App handles network timeout gracefully with retry mechanism",
+    "steps": [
+      "Step 1: Simulate a network timeout (>10s for API calls)",
+      "Step 2: Verify the app shows an appropriate error state",
+      "Step 3: Verify the app retries automatically (max 2 retries)",
+      "Step 4: If retries fail, verify a user-friendly error message with retry button"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Image loading timeout at 30 seconds with retry",
+    "steps": [
+      "Step 1: Simulate a slow image load exceeding 30 seconds",
+      "Step 2: Verify the app times out and shows a placeholder",
+      "Step 3: Verify the app retries the image load"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Thread scroll performance maintains 60fps with 500+ comments",
+    "steps": [
+      "Step 1: Navigate to an Episode Thread with 500+ comments",
+      "Step 2: Scroll rapidly through the entire comment list",
+      "Step 3: Verify sustained 60fps using Instruments Core Animation profiling",
+      "Step 4: Verify no frame drops or stutters"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Cold launch to interactive Home feed completes in under 2 seconds",
+    "steps": [
+      "Step 1: Force-quit the app",
+      "Step 2: Launch the app from the home screen",
+      "Step 3: Start a timer from tap to interactive Home feed",
+      "Step 4: Verify the Home feed is fully interactive within 2 seconds"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Kingfisher disk cache respects 200MB max and 7-day TTL",
+    "steps": [
+      "Step 1: Browse many shows to fill the image cache",
+      "Step 2: Verify the disk cache does not exceed 200MB",
+      "Step 3: Verify images older than 7 days are evicted",
+      "Step 4: Verify the cache is stored in the app's Caches directory"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "SwiftData LRU eviction removes oldest shows after 500 cached",
+    "steps": [
+      "Step 1: Visit 500+ different shows to fill the local cache",
+      "Step 2: Verify the oldest show data is evicted when the 501st is cached",
+      "Step 3: Verify the most recently visited shows remain in cache"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Recent searches limited to 50 entries with 30-day TTL",
+    "steps": [
+      "Step 1: Perform more than 50 searches",
+      "Step 2: Verify only the 50 most recent are stored",
+      "Step 3: Verify searches older than 30 days are removed"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "HTTPS TLS 1.3 enforced on all network traffic",
+    "steps": [
+      "Step 1: Monitor all network requests from the app",
+      "Step 2: Verify all requests use HTTPS",
+      "Step 3: Verify TLS 1.3 is the negotiated protocol"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "API keys are not exposed in source control or app bundle metadata",
+    "steps": [
+      "Step 1: Inspect the source repository",
+      "Step 2: Verify TMDB API key is in Info.plist and .gitignored",
+      "Step 3: Verify Firebase config (GoogleService-Info.plist) is properly handled",
+      "Step 4: Verify no API keys are hardcoded in Swift source files"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "No PII is logged to Firebase Analytics",
+    "steps": [
+      "Step 1: Perform various actions in the app (sign in, comment, vote)",
+      "Step 2: Inspect Firebase Analytics events",
+      "Step 3: Verify no personal identifiable information (email, real name, location) is logged",
+      "Step 4: Verify display names (user-chosen) are not treated as PII"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "GDPR account deletion anonymizes comments and removes all personal data",
+    "steps": [
+      "Step 1: Create an account, post comments, save shows, vote",
+      "Step 2: Delete the account via Settings",
+      "Step 3: Verify UserProfile is deleted from Firestore",
+      "Step 4: Verify WatchlistEntries are deleted",
+      "Step 5: Verify Votes are deleted",
+      "Step 6: Verify Comments remain but author info is anonymized (e.g., '[deleted user]')",
+      "Step 7: Verify comment text is preserved for thread integrity",
+      "Step 8: Verify the user cannot sign back in with the same credentials"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Trending show card displays the correct episode label format (S2E7)",
+    "steps": [
+      "Step 1: Navigate to the Home tab Trending section",
+      "Step 2: Verify each card shows the episode in the format S{n}E{n}",
+      "Step 3: Verify the label corresponds to the correct episode"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Movie search results are correctly distinguished from TV show results",
+    "steps": [
+      "Step 1: Search for a term that returns both movies and TV shows (e.g., 'Batman')",
+      "Step 2: Verify movies are labeled as movies and TV shows as TV shows in results",
+      "Step 3: Tap a movie result and verify it opens as a movie Show Detail (single episode)",
+      "Step 4: Tap a TV show result and verify it opens with season/episode structure"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Show with more than 20 seasons makes a second TMDB API call for remaining seasons",
+    "steps": [
+      "Step 1: Navigate to a show with 20+ seasons (e.g., The Simpsons)",
+      "Step 2: Verify the first 20 seasons load via a single append_to_response call",
+      "Step 3: Verify additional seasons are fetched in a follow-up API call",
+      "Step 4: Verify all seasons are available in the season selector"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Streaming link region awareness displays correct providers for the user's region",
+    "steps": [
+      "Step 1: Set the device region to US",
+      "Step 2: Navigate to a Show Detail page",
+      "Step 3: Verify streaming links reflect US availability (e.g., Hulu available)",
+      "Step 4: Simulate a different region (e.g., UK)",
+      "Step 5: Verify streaming links update to reflect UK availability"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Where to Watch row in Episode Thread is collapsed by default and expandable",
+    "steps": [
+      "Step 1: Navigate to an Episode Thread",
+      "Step 2: Verify the 'Where to Watch' streaming row is collapsed by default",
+      "Step 3: Tap to expand and verify streaming links appear",
+      "Step 4: Tap again to collapse"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Comment timestamp shows relative time (e.g., '2h ago', '3d ago')",
+    "steps": [
+      "Step 1: View comments in a thread",
+      "Step 2: Verify timestamps display relative time (e.g., 'Just now', '5m ago', '2h ago', '3d ago')",
+      "Step 3: Verify older comments show the actual date"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Deleted comments display [deleted] placeholder while preserving replies",
+    "steps": [
+      "Step 1: View a thread containing a deleted comment with replies",
+      "Step 2: Verify the deleted comment shows '[deleted]' instead of the original text",
+      "Step 3: Verify the deleted comment's replies are still visible and properly nested"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Edited comment indicator shows 'edited' label with timestamp",
+    "steps": [
+      "Step 1: Edit a comment",
+      "Step 2: Verify an 'edited' label appears on the comment",
+      "Step 3: Verify the edit timestamp is shown (e.g., 'edited 2h ago')"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Negative vote scores display as negative numbers",
+    "steps": [
+      "Step 1: Downvote a comment to create a negative net score",
+      "Step 2: Verify the score displays as a negative number (e.g., '-3')",
+      "Step 3: Verify the negative score uses the destructive color (system red)"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Loading states show appropriate skeleton/shimmer UI on all data-driven screens",
+    "steps": [
+      "Step 1: Simulate slow network on app launch",
+      "Step 2: Verify the Home tab shows skeleton/shimmer placeholders",
+      "Step 3: Navigate to Show Detail and verify shimmer during data load",
+      "Step 4: Navigate to an Episode Thread and verify comment area shows loading state"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Firestore snapshot listener properly detaches when leaving an Episode Thread",
+    "steps": [
+      "Step 1: Navigate to an Episode Thread (snapshot listener attaches)",
+      "Step 2: Navigate back to Show Detail",
+      "Step 3: Verify the Firestore snapshot listener for the thread is detached",
+      "Step 4: Verify no memory leaks from abandoned listeners"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Cloud Function background refresh updates airing shows every 6 hours",
+    "steps": [
+      "Step 1: Follow an airing show",
+      "Step 2: Simulate 6 hours passing",
+      "Step 3: Verify the Cloud Function triggers and refreshes the show's metadata from TMDB",
+      "Step 4: Verify lastRefreshed timestamp is updated",
+      "Step 5: Verify any new episodes are detected and threads created"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Comment outbox replays queued offline comments in FIFO order on reconnect",
+    "steps": [
+      "Step 1: Go offline",
+      "Step 2: Post 3 comments in sequence",
+      "Step 3: Reconnect to the network",
+      "Step 4: Verify all 3 comments are submitted in the order they were created",
+      "Step 5: Verify no duplicates are created"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Vote outbox replays queued offline votes on reconnect without duplicates",
+    "steps": [
+      "Step 1: Go offline",
+      "Step 2: Upvote comment A, downvote comment B",
+      "Step 3: Reconnect",
+      "Step 4: Verify both votes are synced to Firestore",
+      "Step 5: Verify no duplicate Vote documents exist"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Sendable conformance is enforced on all models crossing isolation boundaries",
+    "steps": [
+      "Step 1: Compile the project with strict concurrency checking",
+      "Step 2: Verify no Sendable warnings for Show, Season, Episode, Comment, Vote, UserProfile, WatchlistEntry, StreamingLink, AppNotification",
+      "Step 3: Verify models used in async contexts compile without errors"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "All ViewModels are @MainActor and update UI on the main thread",
+    "steps": [
+      "Step 1: Inspect all ViewModel classes",
+      "Step 2: Verify they are annotated with @MainActor",
+      "Step 3: Trigger async operations (search, fetch show, post comment)",
+      "Step 4: Verify all @Published or @Observable property updates occur on the main thread"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "NavigationStack preserves state when switching tabs and returning",
+    "steps": [
+      "Step 1: Navigate from Home to Show Detail to Episode Thread",
+      "Step 2: Switch to My Shows tab",
+      "Step 3: Switch back to Home tab",
+      "Step 4: Verify the navigation stack is preserved (still on Episode Thread)",
+      "Step 5: Tap back and verify Show Detail is intact"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "App handles TMDB rate limit (40 req/10s) gracefully with queuing",
+    "steps": [
+      "Step 1: Trigger many rapid TMDB requests (e.g., rapid search typing without debounce)",
+      "Step 2: Verify the app handles rate limit responses (429) gracefully",
+      "Step 3: Verify requests are queued and retried after the limit window"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Comment sort persists within a session when navigating away and returning to a thread",
+    "steps": [
+      "Step 1: Navigate to an Episode Thread",
+      "Step 2: Change sort to 'New'",
+      "Step 3: Navigate back to Show Detail",
+      "Step 4: Re-enter the same Episode Thread",
+      "Step 5: Verify the sort mode is still set to 'New'"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Episode Thread Where to Watch streaming row data matches Show Detail streaming links",
+    "steps": [
+      "Step 1: Navigate to Show Detail and note the streaming platforms shown",
+      "Step 2: Tap an episode to enter the Thread",
+      "Step 3: Expand the 'Where to Watch' row",
+      "Step 4: Verify the same streaming platforms are listed"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Bottom sheet for status selection on add-to-watchlist uses native iOS sheet styling",
+    "steps": [
+      "Step 1: Trigger the add-to-watchlist flow (via FAB or bookmark)",
+      "Step 2: Verify a bottom sheet appears with status options",
+      "Step 3: Verify the sheet uses native iOS presentation style with detents",
+      "Step 4: Verify the sheet can be dismissed by swiping down"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Search bar on Home and My Shows tabs is properly positioned below navigation bar",
+    "steps": [
+      "Step 1: Navigate to Home tab",
+      "Step 2: Verify the search bar sits below the navigation title",
+      "Step 3: Navigate to My Shows tab",
+      "Step 4: Verify the search bar positioning is consistent",
+      "Step 5: Verify the search bar does not overlap with navigation bar elements"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Glass effect backwards compatibility gate with #available(iOS 26.0, *)",
+    "steps": [
+      "Step 1: Inspect the codebase for glass effect usage",
+      "Step 2: Verify all .glassEffect() calls are wrapped in #available(iOS 26.0, *) checks",
+      "Step 3: Verify fallback to .ultraThinMaterial is provided for potential future iOS 25 support"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "TMDB configuration endpoint is fetched at app launch and cached for 24 hours",
+    "steps": [
+      "Step 1: Launch the app",
+      "Step 2: Verify GET /configuration is called",
+      "Step 3: Verify the image base URL is cached",
+      "Step 4: Relaunch the app within 24 hours",
+      "Step 5: Verify /configuration is NOT called again (served from cache)"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Show followerCount increments when a user saves and decrements when removed",
+    "steps": [
+      "Step 1: Note the followerCount for a show in Firestore",
+      "Step 2: Save the show to watchlist",
+      "Step 3: Verify followerCount incremented by 1",
+      "Step 4: Remove the show from watchlist",
+      "Step 5: Verify followerCount decremented by 1"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Episode commentCount denormalized field stays in sync with actual comment documents",
+    "steps": [
+      "Step 1: Note the commentCount on an episode in Firestore",
+      "Step 2: Post a new comment in the thread",
+      "Step 3: Verify commentCount increments by 1",
+      "Step 4: Delete the comment",
+      "Step 5: Verify commentCount decrements (or stays based on soft-delete policy)"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Privacy nutrition label is accurate and submitted for App Store",
+    "steps": [
+      "Step 1: Review all data collection in the app",
+      "Step 2: Verify the privacy nutrition label accurately reflects: data linked to identity (display name, email), usage data (analytics), and no third-party tracking",
+      "Step 3: Verify the label is submitted in App Store Connect"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "End-to-end flow: new user signs up, searches show, saves to watchlist, reads thread, posts comment, votes, and receives reply notification",
+    "steps": [
+      "Step 1: Launch app as unauthenticated user",
+      "Step 2: Navigate to Profile tab and tap Sign in with Apple",
+      "Step 3: Complete Apple authentication",
+      "Step 4: Verify profile is created with default name and 0 karma",
+      "Step 5: Navigate to Home tab and tap the search bar",
+      "Step 6: Search for The Bear",
+      "Step 7: Tap the show in results to open Show Detail",
+      "Step 8: Tap the Save to Watchlist button and select Currently Watching",
+      "Step 9: Verify the show appears in My Shows tab under Currently Watching",
+      "Step 10: Return to Show Detail and tap Season 1 Episode 1",
+      "Step 11: Verify the Episode Thread loads with header, sort control, and comments",
+      "Step 12: Tap the compose bar and write a comment",
+      "Step 13: Submit the comment and verify it appears in the thread",
+      "Step 14: Upvote another users comment and verify score changes",
+      "Step 15: Have another user reply to your comment",
+      "Step 16: Navigate to Profile Notifications and verify the reply notification appears",
+      "Step 17: Tap the notification and verify navigation to the reply in the thread"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "End-to-end flow: manage watchlist lifecycle add show, change status through watching to completed, remove",
+    "steps": [
+      "Step 1: Navigate to My Shows tab",
+      "Step 2: Tap the + FAB to open search",
+      "Step 3: Search for a show and add it as Plan to Watch",
+      "Step 4: Verify it appears under Plan to Watch segment",
+      "Step 5: Long-press the show and select Change Status to Currently Watching",
+      "Step 6: Verify it moves to the Currently Watching segment with animation",
+      "Step 7: Verify notifications are enabled for this show",
+      "Step 8: Long-press again and change to Completed",
+      "Step 9: Verify it moves to Completed segment",
+      "Step 10: Swipe left on the show and tap Remove",
+      "Step 11: Verify haptic confirmation and the show is removed",
+      "Step 12: Navigate to My Shows and verify it no longer appears in any segment",
+      "Step 13: Verify the WatchlistEntry is deleted from Firestore"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "End-to-end flow: comment thread interaction post, reply, edit, delete, sort, and paginate",
+    "steps": [
+      "Step 1: Navigate to an Episode Thread",
+      "Step 2: Post a top-level comment via the compose bar",
+      "Step 3: Verify the comment appears immediately (optimistic)",
+      "Step 4: Reply to another users comment",
+      "Step 5: Verify the reply appears nested under the parent",
+      "Step 6: Edit your top-level comment text",
+      "Step 7: Verify the edited indicator appears",
+      "Step 8: Delete your reply",
+      "Step 9: Verify the reply shows [deleted] but parent/sibling comments remain",
+      "Step 10: Switch sort to Top and verify re-ordering",
+      "Step 11: Switch sort to New and verify reverse chronological",
+      "Step 12: Scroll to the bottom to trigger pagination",
+      "Step 13: Verify additional comments load without duplicates"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "End-to-end flow: voting lifecycle upvote, switch to downvote, remove vote, verify karma impact",
+    "steps": [
+      "Step 1: Navigate to a thread and note a comments score and authors karma",
+      "Step 2: Upvote the comment",
+      "Step 3: Verify score +1, author karma +1, bounce animation, light haptic",
+      "Step 4: Tap downvote (switching vote)",
+      "Step 5: Verify score is now -1 from original, author karma -1 from original",
+      "Step 6: Tap downvote again to remove the vote",
+      "Step 7: Verify score returns to original, author karma returns to original",
+      "Step 8: Verify the Vote document is deleted from Firestore",
+      "Step 9: Attempt to vote on your own comment and verify its blocked",
+      "Step 10: Verify only one Vote document exists per user per comment at any time"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "End-to-end flow: offline mode browse cached data, queue actions, sync on reconnect",
+    "steps": [
+      "Step 1: While online, visit a Show Detail and Episode Thread to cache data",
+      "Step 2: Save the show to watchlist while online",
+      "Step 3: Disable network connectivity",
+      "Step 4: Navigate to My Shows and verify watchlist loads from cache",
+      "Step 5: Navigate to the cached Show Detail and verify it loads",
+      "Step 6: Enter the cached Episode Thread and verify cached comments display",
+      "Step 7: Verify a staleness indicator is shown",
+      "Step 8: Post a comment (queued in offline outbox)",
+      "Step 9: Upvote a comment (queued in offline outbox)",
+      "Step 10: Re-enable network connectivity",
+      "Step 11: Verify the comment is synced to Firestore",
+      "Step 12: Verify the vote is synced to Firestore",
+      "Step 13: Verify no duplicates were created"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "End-to-end flow: spoiler protection lifecycle set caught-up, encounter gate, reveal spoiler tags",
+    "steps": [
+      "Step 1: Navigate to Profile Settings Spoiler Protection",
+      "Step 2: Set caught up through to Season 2 Episode 5 for a show",
+      "Step 3: Navigate to that shows Detail page",
+      "Step 4: Verify episodes S2E1-E5 are accessible without gates",
+      "Step 5: Tap episode S2E6",
+      "Step 6: Verify a spoiler gate appears requiring confirmation",
+      "Step 7: Confirm and verify the thread loads",
+      "Step 8: View a comment with spoiler syntax",
+      "Step 9: Verify the spoiler text is blurred",
+      "Step 10: Tap to reveal and verify the text is shown",
+      "Step 11: Navigate to an episode aired less than 48h ago",
+      "Step 12: Verify the spoiler warning banner is displayed prominently"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "End-to-end flow: profile management edit name, bio, avatar, check karma breakdown, view history",
+    "steps": [
+      "Step 1: Navigate to Profile tab",
+      "Step 2: Tap display name and change it to a valid unique name",
+      "Step 3: Verify the name updates on screen and in Firestore",
+      "Step 4: Tap bio and add text (under 160 chars)",
+      "Step 5: Verify bio updates",
+      "Step 6: Tap avatar and select a curated default",
+      "Step 7: Verify avatar updates visually and in Firestore",
+      "Step 8: Tap karma score and verify breakdown tooltip (up, down, net)",
+      "Step 9: Scroll to Comment History and verify paginated comments",
+      "Step 10: Tap a comment and verify navigation to the thread",
+      "Step 11: Verify the thread scrolls to the specific comment"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "End-to-end flow: notification settings toggle preferences, test per-show mute, configure quiet hours",
+    "steps": [
+      "Step 1: Navigate to Profile Settings Notifications",
+      "Step 2: Toggle off New Episodes notifications",
+      "Step 3: Simulate a new episode for a followed show",
+      "Step 4: Verify no notification is received",
+      "Step 5: Toggle New Episodes back on",
+      "Step 6: Go to My Shows, long-press a show, tap Mute Notifications",
+      "Step 7: Simulate a new episode for that specific muted show",
+      "Step 8: Verify no notification for the muted show but notifications work for other followed shows",
+      "Step 9: Configure quiet hours from 10 PM to 7 AM",
+      "Step 10: Simulate a notification during quiet hours",
+      "Step 11: Verify the notification is suppressed during quiet hours"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "End-to-end flow: moderation report comment, mute user, block user, verify isolation",
+    "steps": [
+      "Step 1: Navigate to a thread with comments from various users",
+      "Step 2: Long-press a comment and tap Report",
+      "Step 3: Select Harassment category and confirm",
+      "Step 4: Verify confirmation message shown",
+      "Step 5: Long-press another comment from a user and tap Mute User",
+      "Step 6: Verify all comments from that user disappear from the current thread",
+      "Step 7: Navigate to a different thread and verify the muted users comments are hidden there too",
+      "Step 8: Block a different user",
+      "Step 9: Verify their comments are hidden",
+      "Step 10: Simulate the blocked user trying to reply to your comment",
+      "Step 11: Verify Firestore security rules reject the reply"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "End-to-end flow: search and discovery search shows, browse results, use trending, check recent searches",
+    "steps": [
+      "Step 1: Open search from Home tab",
+      "Step 2: Verify trending searches are displayed when field is empty",
+      "Step 3: Tap a trending search and verify results load",
+      "Step 4: Clear and type a custom query Stranger Things",
+      "Step 5: Wait 300ms debounce and verify results appear within 1 second",
+      "Step 6: Verify results show poster, title, year, network",
+      "Step 7: Tap a result to open Show Detail",
+      "Step 8: Navigate back to search",
+      "Step 9: Clear the field and verify recent searches include both the trending term and Stranger Things",
+      "Step 10: Verify recent searches are ordered most recent first"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "End-to-end flow: deep linking open app via URL scheme, navigate to correct thread, handle missing content",
+    "steps": [
+      "Step 1: Open URL showthread://show/1399/season/5/episode/14 from outside the app",
+      "Step 2: Verify the app launches",
+      "Step 3: Verify the Episode Thread for Breaking Bad S5E14 opens",
+      "Step 4: Verify the correct show, season, and episode metadata is displayed",
+      "Step 5: Navigate back and verify the Show Detail page is in the navigation stack",
+      "Step 6: Open a deep link to a non-existent show ID",
+      "Step 7: Verify the app handles the error gracefully with an error message",
+      "Step 8: Receive a push notification for a reply",
+      "Step 9: Tap the notification",
+      "Step 10: Verify the app navigates to the specific comment in the thread"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "End-to-end visual consistency: all glass components maintain visual harmony across screens in light mode",
+    "steps": [
+      "Step 1: Set app to light mode",
+      "Step 2: Navigate to Home tab and observe the glass tab bar",
+      "Step 3: Navigate to a Show Detail with glass season pills and streaming chips",
+      "Step 4: Navigate to an Episode Thread with glass sort control, vote arrows, and compose bar",
+      "Step 5: Navigate to My Shows with glass FAB and status segments",
+      "Step 6: Verify all glass elements have consistent translucency, refraction, and specular highlights",
+      "Step 7: Verify the chrome vs content principle is maintained no glass on content cards",
+      "Step 8: Verify glass elements respond consistently to scrolling and interaction",
+      "Step 9: Compare glass treatment across all screens for visual harmony",
+      "Step 10: Verify GlassEffectContainer morph animations maintain consistent style"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "End-to-end visual consistency: all glass components in dark mode maintain harmony",
+    "steps": [
+      "Step 1: Set app to dark mode",
+      "Step 2: Navigate through Home, My Shows, Profile tabs",
+      "Step 3: Visit Show Detail and Episode Thread",
+      "Step 4: Verify glass elements have appropriate dark mode translucency",
+      "Step 5: Verify glass pills, buttons, and controls are visible against dark backgrounds",
+      "Step 6: Verify accent color reads well in dark mode",
+      "Step 7: Verify no dark-on-dark readability issues",
+      "Step 8: Verify the compose bar glass effect is visible against dark thread background",
+      "Step 9: Verify spoiler blurred blocks are distinguishable in dark mode",
+      "Step 10: Compare overall visual consistency with light mode"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Complete accessibility audit: VoiceOver, Dynamic Type, Reduce Motion, and Reduce Transparency across all screens",
+    "steps": [
+      "Step 1: Enable VoiceOver and navigate through all 3 tabs and key screens",
+      "Step 2: Verify every interactive element has accessibilityLabel and accessibilityHint",
+      "Step 3: Verify VoiceOver rotor supports heading navigation in comment threads",
+      "Step 4: Disable VoiceOver and enable largest accessibility text size AX5",
+      "Step 5: Verify all text scales up without truncation or overlap",
+      "Step 6: Verify glass containers resize to accommodate larger text",
+      "Step 7: Enable Reduce Motion",
+      "Step 8: Verify spring animations fall back to easeInOut 0.25",
+      "Step 9: Verify symbolEffect bounce is suppressed",
+      "Step 10: Enable Reduce Transparency",
+      "Step 11: Verify all glass elements render with opaque fallback backgrounds",
+      "Step 12: Verify all controls remain functional with accessibility settings enabled"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "End-to-end flow: TMDB data lifecycle first fetch, cache, stale detection, background refresh, and failure handling",
+    "steps": [
+      "Step 1: Search for and visit a show for the first time",
+      "Step 2: Verify TMDB API is called to fetch show data",
+      "Step 3: Verify data is cached in SwiftData",
+      "Step 4: Navigate away and return to the show",
+      "Step 5: Verify data loads from cache (no API call within 6h)",
+      "Step 6: Simulate 6+ hours passing (advance lastRefreshed)",
+      "Step 7: Visit the show again",
+      "Step 8: Verify a background refresh is triggered from TMDB",
+      "Step 9: Verify the UI updates with fresh data",
+      "Step 10: Simulate a TMDB API failure",
+      "Step 11: Visit the show again",
+      "Step 12: Verify cached data is displayed",
+      "Step 13: Verify Content may be outdated banner appears"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "End-to-end flow: account deletion and data cleanup verification",
+    "steps": [
+      "Step 1: Create an account and set up profile (name, bio, avatar)",
+      "Step 2: Save 3 shows to watchlist",
+      "Step 3: Post 5 comments across different threads",
+      "Step 4: Vote on 3 comments",
+      "Step 5: Navigate to Profile Settings Account Delete Account",
+      "Step 6: Confirm deletion",
+      "Step 7: Verify UserProfile document is deleted from Firestore",
+      "Step 8: Verify all WatchlistEntry documents are deleted",
+      "Step 9: Verify all Vote documents are deleted",
+      "Step 10: Verify comments remain but author info is anonymized",
+      "Step 11: Verify the user is signed out and sees sign-in screen",
+      "Step 12: Verify the user cannot sign back in with the same credentials"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "End-to-end flow: real-time discussion simulation multiple users posting and voting simultaneously",
+    "steps": [
+      "Step 1: Open an Episode Thread on Device A (User A)",
+      "Step 2: Open the same thread on Device B (User B)",
+      "Step 3: User A posts a comment",
+      "Step 4: Verify the comment appears on Device B in real-time (slide-in animation)",
+      "Step 5: User B upvotes User As comment",
+      "Step 6: Verify the vote count updates on Device A in real-time",
+      "Step 7: User B posts a reply to User As comment",
+      "Step 8: Verify the reply appears nested on Device A in real-time",
+      "Step 9: Verify User A receives an in-app notification for the reply",
+      "Step 10: User A downvotes User Bs reply",
+      "Step 11: Verify the vote updates on Device B in real-time"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Home feed algorithmic ranking prioritizes watchlist shows, trending, recent, and discovery appropriately",
+    "steps": [
+      "Step 1: Save 3 shows to watchlist with active threads",
+      "Step 2: Navigate to Home tab",
+      "Step 3: Verify From Your Watchlist section appears with followed show threads",
+      "Step 4: Verify Trending Now shows episodes with highest comment velocity (24h)",
+      "Step 5: Verify Recently Aired shows threads from last 48h sorted by activity",
+      "Step 6: Verify Discover shows breakout shows with high engagement ratios",
+      "Step 7: Verify sections are in the correct order: Trending, Watchlist, Recent, Discover",
+      "Step 8: Pull to refresh and verify data updates",
+      "Step 9: Remove all watchlist shows",
+      "Step 10: Verify From Your Watchlist shows the empty state prompt"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Complete animation inventory: verify all specified animations across the app",
+    "steps": [
+      "Step 1: Upvote a comment verify symbolEffect bounce plus light haptic",
+      "Step 2: Save a show verify symbolEffect bounce plus medium haptic",
+      "Step 3: Observe real-time comment verify move edge top plus opacity with spring",
+      "Step 4: Switch sort mode verify contentTransition symbolEffect replace",
+      "Step 5: Tap compose bar verify GlassEffectContainer morph to full sheet",
+      "Step 6: Dismiss compose sheet verify reverse morph animation",
+      "Step 7: Navigate from show card to Show Detail verify matchedGeometryEffect on hero image",
+      "Step 8: Navigate back verify reverse matchedGeometryEffect",
+      "Step 9: Pull to refresh verify Liquid Glass progress indicator animation",
+      "Step 10: Scroll Home feed verify tab bar shrinks smoothly",
+      "Step 11: Scroll back up verify tab bar expands smoothly"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Complete color system verification: semantic colors, accent, destructive, text hierarchy",
+    "steps": [
+      "Step 1: Verify primary backgrounds use system background color in both modes",
+      "Step 2: Verify cards use secondarySystemGroupedBackground",
+      "Step 3: Verify accent color on vote highlights, badges, and interactive states",
+      "Step 4: Verify destructive actions use system red",
+      "Step 5: Verify primary text uses label",
+      "Step 6: Verify metadata text uses secondaryLabel",
+      "Step 7: Verify timestamps use tertiaryLabel",
+      "Step 8: Switch between light and dark mode",
+      "Step 9: Verify no hardcoded hex colors break in either mode",
+      "Step 10: Verify the accent color remains consistent across both modes"
+    ],
+    "passes": false
+  },
+  {
+    "category": "style",
+    "description": "Complete spacing and layout verification across all screen types",
+    "steps": [
+      "Step 1: Measure horizontal padding on Home feed cards verify 16pt",
+      "Step 2: Measure vertical spacing between elements verify 12pt",
+      "Step 3: Measure comment indentation levels verify 16pt per level",
+      "Step 4: Verify max comment indentation at depth 5 is 80pt",
+      "Step 5: Measure show card corner radius verify 12pt",
+      "Step 6: Measure comment card corner radius verify 8pt",
+      "Step 7: Measure Profile avatar verify 80pt diameter",
+      "Step 8: Measure Show Detail avatars verify 40pt",
+      "Step 9: Measure inline comment avatars verify 24pt",
+      "Step 10: Verify all touch targets meet 44x44pt minimum"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "App correctly handles edge case of a show changing status from airing to ended",
+    "steps": [
+      "Step 1: Follow a show with status airing",
+      "Step 2: Simulate the Cloud Function detecting the show has ended",
+      "Step 3: Verify the shows status is updated to ended in Firestore and SwiftData",
+      "Step 4: Verify the Show Detail page reflects the new status",
+      "Step 5: Verify Next episode countdown no longer appears on My Shows"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Concurrent vote writes from multiple users on the same comment produce correct final count",
+    "steps": [
+      "Step 1: Start with a comment at score 0",
+      "Step 2: User A upvotes (+1)",
+      "Step 3: User B upvotes (+1) simultaneously",
+      "Step 4: User C downvotes (-1) simultaneously",
+      "Step 5: Verify final score is 1 (2 upvotes minus 1 downvote)",
+      "Step 6: Verify 3 Vote documents exist with correct values",
+      "Step 7: Verify no race conditions produced incorrect counts"
+    ],
+    "passes": false
+  }
+]
