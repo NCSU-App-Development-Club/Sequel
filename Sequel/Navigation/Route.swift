@@ -1,7 +1,7 @@
 import Foundation
 
 enum Route: Hashable {
-    case showDetail(tmdbId: Int)
+    case showDetail(tmdbId: Int, mediaType: MediaType = .tvShow)
     case episodeThread(showId: Int, season: Int, episode: Int)
     case search
     case settings

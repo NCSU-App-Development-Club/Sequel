@@ -42,12 +42,12 @@ struct ContentView: View {
     @ViewBuilder
     private func destinationView(for route: Route) -> some View {
         switch route {
-        case .showDetail(let tmdbId):
-            ShowDetailView(tmdbId: tmdbId)
+        case .showDetail(let tmdbId, let mediaType):
+            ShowDetailView(tmdbId: tmdbId, mediaType: mediaType)
         case .episodeThread(let showId, let season, let episode):
             ThreadView(showId: showId, season: season, episode: episode)
         case .search:
-            Text("Search")
+            SearchView()
         case .settings:
             Text("Settings")
         case .notifications:

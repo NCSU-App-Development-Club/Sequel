@@ -5,6 +5,10 @@ import SwiftData
 struct ShowThreadApp: App {
     @State private var router = Router()
 
+    init() {
+        KingfisherConfig.configure()
+    }
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Show.self,

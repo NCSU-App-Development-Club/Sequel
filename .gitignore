@@ -27,3 +27,6 @@ Secrets.*.xcconfig
 
 # SwiftPM local state
 .swiftpm/
+/Sequel.xcodeproj
+/Sequel.xcodeproj
+Sequel.xcodeproj/project.pbxproj
