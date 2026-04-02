@@ -1,0 +1,94 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ─── Helpers ──────────────────────────────────────────────────────────────
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // ─── Users ────────────────────────────────────────────────────────────────
+
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId);
+      allow delete: if isOwner(userId);
+
+      // Watchlist sub-collection
+      match /watchlist/{tmdbId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId);
+        allow update: if isOwner(userId);
+        allow delete: if isOwner(userId);
+      }
+    }
+
+    // ─── Shows & Episodes (public read, no client writes) ─────────────────────
+
+    match /shows/{tmdbId} {
+      allow read: if true;
+      allow write: if false; // written by Cloud Functions only
+
+      match /episodes/{episodeId} {
+        allow read: if true;
+        allow write: if false;
+      }
+    }
+
+    // ─── Comments ─────────────────────────────────────────────────────────────
+
+    match /comments/{commentId} {
+      allow read: if true;
+
+      // Create: authenticated, author matches uid, depth <= 5, not deleted
+      allow create: if isSignedIn()
+        && request.resource.data.authorId == request.auth.uid
+        && request.resource.data.depth <= 5
+        && request.resource.data.isDeleted == false;
+
+      // Update: own comment only; can edit body/editedAt or soft-delete
+      allow update: if isSignedIn()
+        && resource.data.authorId == request.auth.uid;
+
+      // Delete: not allowed (use soft delete via update)
+      allow delete: if false;
+    }
+
+    // ─── Votes ────────────────────────────────────────────────────────────────
+
+    // Document ID format: {commentId}_{userId} — enforces 1 vote per user per comment
+    match /votes/{voteId} {
+      allow read: if isSignedIn();
+
+      // Create: ID must be {commentId}_{uid}, value must be +1 or -1
+      allow create: if isSignedIn()
+        && voteId.matches('.*_' + request.auth.uid)
+        && request.resource.data.userId == request.auth.uid
+        && (request.resource.data.value == 1 || request.resource.data.value == -1);
+
+      // Update: own vote only
+      allow update: if isSignedIn()
+        && resource.data.userId == request.auth.uid;
+
+      // Delete: own vote only (remove vote)
+      allow delete: if isSignedIn()
+        && resource.data.userId == request.auth.uid;
+    }
+
+    // ─── Notifications ────────────────────────────────────────────────────────
+
+    match /notifications/{notificationId} {
+      allow read: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if false; // Cloud Functions only
+      allow update: if isSignedIn() && resource.data.userId == request.auth.uid; // mark read
+      allow delete: if false;
+    }
+  }
+}
