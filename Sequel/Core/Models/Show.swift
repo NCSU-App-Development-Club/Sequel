@@ -2,7 +2,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class Show: @unchecked Sendable {
+final class Show {
     @Attribute(.unique) var tmdbId: Int
     var title: String
     var overview: String

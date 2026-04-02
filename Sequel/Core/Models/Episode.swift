@@ -2,7 +2,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class Episode: @unchecked Sendable {
+final class Episode {
     @Attribute(.unique) var id: String
     var showTmdbId: Int
     var seasonNumber: Int

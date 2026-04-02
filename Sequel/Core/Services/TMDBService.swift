@@ -1,17 +1,19 @@
 import Foundation
 
-actor TMDBService: TMDBServiceProtocol {
+@MainActor
+final class TMDBService: TMDBServiceProtocol {
     static let shared = TMDBService()
 
     private let client = APIClient.shared
     private let base = APIConfig.tmdbBaseURL
+    private let apiKey = APIConfig.tmdbAPIKey
 
     // 24h config cache
     private var cachedConfiguration: TMDBConfiguration?
     private var configurationFetchedAt: Date?
     private let configCacheDuration: TimeInterval = 24 * 60 * 60
 
-    private var apiKey: String { APIConfig.tmdbAPIKey }
+    private init() {}
 
     // MARK: - Search
 
@@ -31,13 +33,11 @@ actor TMDBService: TMDBServiceProtocol {
     // MARK: - Show Detail (with append_to_response batching)
 
     func fetchShow(id: Int) async throws -> TMDBShowDTO {
-        // Fetch basic show info first to get season count
         var components = URLComponents(string: "\(base)/tv/\(id)")!
         components.queryItems = [URLQueryItem(name: "api_key", value: apiKey)]
         guard let url = components.url else { throw AppError.networkError("Invalid show URL") }
         let show: TMDBShowDTO = try await client.request(url: url)
 
-        // Batch up to 20 seasons via append_to_response
         let seasonCount = min(show.numberOfSeasons ?? 0, 20)
         if seasonCount > 0 {
             let seasonParams = (1...seasonCount).map { "season/\($0)" }.joined(separator: ",")
@@ -47,8 +47,7 @@ actor TMDBService: TMDBServiceProtocol {
                 URLQueryItem(name: "append_to_response", value: "\(seasonParams),watch/providers")
             ]
             if let batchURL = batchComponents.url {
-                let batched: TMDBShowDTO = try await client.request(url: batchURL)
-                return batched
+                return try await client.request(url: batchURL)
             }
         }
         return show
@@ -94,7 +93,6 @@ actor TMDBService: TMDBServiceProtocol {
            Date.now.timeIntervalSince(fetchedAt) < configCacheDuration {
             return cached
         }
-
         var components = URLComponents(string: "\(base)/configuration")!
         components.queryItems = [URLQueryItem(name: "api_key", value: apiKey)]
         guard let url = components.url else { throw AppError.networkError("Invalid config URL") }

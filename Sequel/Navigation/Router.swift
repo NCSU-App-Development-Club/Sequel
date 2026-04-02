@@ -7,7 +7,7 @@ final class Router {
     var profilePath = NavigationPath()
     var presentedSheet: Sheet?
 
-    func navigate(to route: Route, tab: Tab = .home) {
+    func navigate(to route: Route, tab: AppTab = .home) {
         switch tab {
         case .home: homePath.append(route)
         case .myShows: myShowsPath.append(route)
@@ -15,7 +15,7 @@ final class Router {
         }
     }
 
-    func pop(tab: Tab = .home) {
+    func pop(tab: AppTab = .home) {
         switch tab {
         case .home: guard !homePath.isEmpty else { return }; homePath.removeLast()
         case .myShows: guard !myShowsPath.isEmpty else { return }; myShowsPath.removeLast()
@@ -23,7 +23,7 @@ final class Router {
         }
     }
 
-    func popToRoot(tab: Tab = .home) {
+    func popToRoot(tab: AppTab = .home) {
         switch tab {
         case .home: homePath = NavigationPath()
         case .myShows: myShowsPath = NavigationPath()
@@ -40,7 +40,7 @@ final class Router {
     }
 }
 
-enum Tab: Sendable {
+enum AppTab: Sendable {
     case home
     case myShows
     case profile

@@ -104,7 +104,7 @@ extension Episode {
 // MARK: - ShowStatus from TMDB string
 
 extension ShowStatus {
-    static func from(tmdbStatus: String?) -> ShowStatus {
+    nonisolated static func from(tmdbStatus: String?) -> ShowStatus {
         switch tmdbStatus?.lowercased() {
         case "returning series", "in production": return .airing
         case "ended": return .ended

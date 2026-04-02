@@ -2,7 +2,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class WatchlistEntry: @unchecked Sendable {
+final class WatchlistEntry {
     @Attribute(.unique) var id: String
     var userId: String
     var tmdbId: Int
