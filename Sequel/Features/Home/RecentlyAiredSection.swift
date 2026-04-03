@@ -9,9 +9,14 @@ struct RecentlyAiredSection: View {
         VStack(alignment: .leading, spacing: 12) {
             sectionHeader
 
-            ForEach(shows) { show in
-                recentRow(show)
-                    .onTapGesture { onTap(show) }
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack(spacing: 12) {
+                    ForEach(shows) { show in
+                        recentCard(show)
+                            .onTapGesture { onTap(show) }
+                    }
+                }
+                .padding(.horizontal, 16)
             }
         }
     }
@@ -20,73 +25,77 @@ struct RecentlyAiredSection: View {
 
     private var sectionHeader: some View {
         HStack {
-            Image(systemName: "clock.fill")
-                .foregroundStyle(.green)
             Text("Recently Aired")
                 .font(.title3.bold())
+            Image(systemName: "chevron.right")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+            Spacer()
         }
-        .padding(.horizontal, GlassTokens.Padding.horizontal)
+        .padding(.horizontal, 16)
     }
 
-    // MARK: - Row
+    // MARK: - Card (landscape, consistent 180x100)
 
-    private func recentRow(_ show: ShowPreview) -> some View {
-        HStack(spacing: 12) {
-            // Poster
-            Group {
-                if let posterPath = show.posterPath,
-                   let url = APIConfig.posterListURL(posterPath) {
-                    KFImage(url)
-                        .resizable()
-                        .placeholder { ShimmerView() }
-                        .aspectRatio(2/3, contentMode: .fill)
-                } else {
-                    Rectangle()
-                        .fill(Color(.systemGray5))
-                        .overlay(Image(systemName: "film").foregroundStyle(.secondary))
-                }
-            }
-            .frame(width: 50, height: 75)
-            .clipShape(RoundedRectangle(cornerRadius: 6))
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text(show.title)
-                    .font(.episodeTitle)
-                    .lineLimit(1)
-
-                HStack(spacing: 6) {
-                    if let year = show.yearString {
-                        Text(year)
-                            .font(.metadata)
-                            .foregroundStyle(.secondary)
-                    }
-                    if let network = show.networks.first {
-                        Text(network)
-                            .font(.metadata)
-                            .foregroundStyle(.secondary)
+    private func recentCard(_ show: ShowPreview) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            ZStack(alignment: .bottomLeading) {
+                // Landscape backdrop card
+                Group {
+                    if let backdropPath = show.backdropPath,
+                       let url = APIConfig.backdropCardURL(backdropPath) {
+                        KFImage(url)
+                            .resizable()
+                            .placeholder { ShimmerView() }
+                            .aspectRatio(16/9, contentMode: .fill)
+                    } else if let posterPath = show.posterPath,
+                              let url = APIConfig.posterListURL(posterPath) {
+                        KFImage(url)
+                            .resizable()
+                            .placeholder { ShimmerView() }
+                            .aspectRatio(16/9, contentMode: .fill)
+                    } else {
+                        Rectangle()
+                            .fill(Color(.systemGray5))
                     }
                 }
+                .frame(width: 180, height: 100)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
 
+                // Comment count overlay
                 if show.voteAverage > 0 {
                     HStack(spacing: 3) {
-                        Image(systemName: "star.fill")
+                        Image(systemName: "bubble.right")
                             .font(.caption2)
-                            .foregroundStyle(.yellow)
-                        Text(String(format: "%.1f", show.voteAverage))
-                            .font(.metadata)
-                            .foregroundStyle(.secondary)
+                        Text("\(Int(show.voteAverage * 10))")
+                            .font(.caption2.weight(.medium))
                     }
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 3)
+                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 4))
+                    .padding(6)
                 }
             }
 
-            Spacer(minLength: 0)
+            Text(show.title)
+                .font(.subheadline.weight(.medium))
+                .lineLimit(1)
+                .frame(width: 180, alignment: .leading)
 
-            Image(systemName: "chevron.right")
-                .font(.caption)
-                .foregroundStyle(.tertiary)
+            HStack(spacing: 4) {
+                if let year = show.yearString {
+                    Text(year)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                if let network = show.networks.first {
+                    Text(network)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .frame(width: 180, alignment: .leading)
         }
-        .padding(.horizontal, GlassTokens.Padding.horizontal)
-        .padding(.vertical, 4)
-        .contentShape(Rectangle())
     }
 }

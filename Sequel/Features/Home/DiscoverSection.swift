@@ -12,13 +12,13 @@ struct DiscoverSection: View {
             sectionHeader
 
             ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: 14) {
+                LazyHStack(spacing: 12) {
                     ForEach(shows) { show in
                         discoverCard(show)
                             .onTapGesture { onTap(show) }
                     }
                 }
-                .padding(.horizontal, GlassTokens.Padding.horizontal)
+                .padding(.horizontal, 16)
             }
         }
     }
@@ -27,31 +27,38 @@ struct DiscoverSection: View {
 
     private var sectionHeader: some View {
         HStack {
-            Image(systemName: "sparkles")
-                .foregroundStyle(.purple)
             Text("Discover")
                 .font(.title3.bold())
+            Image(systemName: "chevron.right")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+            Spacer()
         }
-        .padding(.horizontal, GlassTokens.Padding.horizontal)
+        .padding(.horizontal, 16)
     }
 
-    // MARK: - Card
+    // MARK: - Card (landscape, consistent 180x100)
 
     private func discoverCard(_ show: ShowPreview) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            // Poster
-            ZStack(alignment: .topTrailing) {
+        VStack(alignment: .leading, spacing: 6) {
+            ZStack(alignment: .bottomLeading) {
+                // Landscape backdrop card
                 Group {
-                    if let posterPath = show.posterPath,
-                       let url = APIConfig.posterListURL(posterPath) {
+                    if let backdropPath = show.backdropPath,
+                       let url = APIConfig.backdropCardURL(backdropPath) {
                         KFImage(url)
                             .resizable()
                             .placeholder { ShimmerView() }
-                            .aspectRatio(2/3, contentMode: .fill)
+                            .aspectRatio(16/9, contentMode: .fill)
+                    } else if let posterPath = show.posterPath,
+                              let url = APIConfig.posterListURL(posterPath) {
+                        KFImage(url)
+                            .resizable()
+                            .placeholder { ShimmerView() }
+                            .aspectRatio(16/9, contentMode: .fill)
                     } else {
                         Rectangle()
                             .fill(Color(.systemGray5))
-                            .aspectRatio(2/3, contentMode: .fill)
                             .overlay(
                                 Image(systemName: "tv")
                                     .font(.title2)
@@ -59,41 +66,59 @@ struct DiscoverSection: View {
                             )
                     }
                 }
-                .frame(width: 130, height: 195)
-                .clipShape(RoundedRectangle(cornerRadius: GlassTokens.CornerRadius.showCard))
+                .frame(width: 180, height: 100)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
 
-                // Bookmark button
-                Button {
-                    onBookmark(show)
-                } label: {
-                    Image(systemName: isBookmarked(show.id) ? "bookmark.fill" : "bookmark")
-                        .font(.caption)
+                // Title overlay at bottom
+                LinearGradient(
+                    colors: [.clear, .black.opacity(0.7)],
+                    startPoint: .center,
+                    endPoint: .bottom
+                )
+                .frame(width: 180, height: 50)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .offset(y: 25)
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(show.title)
+                        .font(.caption.weight(.bold))
                         .foregroundStyle(.white)
-                        .padding(6)
-                        .background(.ultraThinMaterial, in: Circle())
-                }
-                .padding(6)
-            }
+                        .lineLimit(1)
 
-            // Title
-            Text(show.title)
-                .font(.subheadline.weight(.semibold))
-                .lineLimit(2)
-                .frame(width: 130, alignment: .leading)
-
-            // Genre tags
-            if !show.genres.isEmpty {
-                HStack(spacing: 4) {
-                    ForEach(show.genres.prefix(2), id: \.self) { genre in
-                        Text(genre)
-                            .font(.caption2)
-                            .foregroundStyle(.secondary)
-                            .padding(.horizontal, 6)
-                            .padding(.vertical, 2)
-                            .background(Color(.systemGray5), in: Capsule())
+                    HStack(spacing: 4) {
+                        if let network = show.networks.first {
+                            Text(network)
+                                .font(.caption2)
+                                .foregroundStyle(.white.opacity(0.8))
+                        }
+                        ForEach(show.genres.prefix(1), id: \.self) { genre in
+                            Text(genre)
+                                .font(.caption2)
+                                .foregroundStyle(.white.opacity(0.8))
+                        }
                     }
                 }
+                .padding(8)
             }
+
+            Text(show.title)
+                .font(.subheadline.weight(.medium))
+                .lineLimit(1)
+                .frame(width: 180, alignment: .leading)
+
+            HStack(spacing: 4) {
+                if let network = show.networks.first {
+                    Text(network)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                ForEach(show.genres.prefix(1), id: \.self) { genre in
+                    Text(genre)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .frame(width: 180, alignment: .leading)
         }
         .contextMenu {
             Button {

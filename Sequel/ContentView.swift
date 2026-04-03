@@ -15,7 +15,6 @@ struct ContentView: View {
                         }
                 }
             }
-
             Tab("My Shows", systemImage: "rectangle.stack.fill") {
                 NavigationStack(path: $router.myShowsPath) {
                     MyShowsView()
@@ -24,10 +23,17 @@ struct ContentView: View {
                         }
                 }
             }
-
             Tab("Profile", systemImage: "person.fill") {
                 NavigationStack(path: $router.profilePath) {
                     ProfileView()
+                        .navigationDestination(for: Route.self) { route in
+                            destinationView(for: route)
+                        }
+                }
+            }
+            Tab(role: .search) {
+                NavigationStack {
+                    SearchView()
                         .navigationDestination(for: Route.self) { route in
                             destinationView(for: route)
                         }
@@ -38,6 +44,8 @@ struct ContentView: View {
             sheetView(for: sheet)
         }
     }
+
+    // MARK: - Destinations
 
     @ViewBuilder
     private func destinationView(for route: Route) -> some View {
@@ -66,6 +74,6 @@ struct ContentView: View {
             Text("Compose")
         case .addShow:
             Text("Add Show")
-        }
+        }#imageLiteral(resourceName: "simulator_screenshot_CBFC0D8B-46A5-4C2E-BBD5-FF98DD1D67D0.png")
     }
 }

@@ -12,11 +12,16 @@ struct WatchlistFeedSection: View {
             if episodes.isEmpty {
                 emptyState
             } else {
-                ForEach(episodes) { episode in
-                    watchlistRow(episode)
-                        .onTapGesture {
-                            onTapShow(episode.showTmdbId, episode.mediaType)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    LazyHStack(spacing: 12) {
+                        ForEach(episodes) { episode in
+                            watchlistCard(episode)
+                                .onTapGesture {
+                                    onTapShow(episode.showTmdbId, episode.mediaType)
+                                }
                         }
+                    }
+                    .padding(.horizontal, 16)
                 }
             }
         }
@@ -26,12 +31,14 @@ struct WatchlistFeedSection: View {
 
     private var sectionHeader: some View {
         HStack {
-            Image(systemName: "bookmark.fill")
-                .foregroundStyle(AppColors.accent)
             Text("From Your Watchlist")
                 .font(.title3.bold())
+            Image(systemName: "chevron.right")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+            Spacer()
         }
-        .padding(.horizontal, GlassTokens.Padding.horizontal)
+        .padding(.horizontal, 16)
     }
 
     // MARK: - Empty State
@@ -39,7 +46,7 @@ struct WatchlistFeedSection: View {
     private var emptyState: some View {
         VStack(spacing: 12) {
             Image(systemName: "rectangle.stack.badge.plus")
-                .font(.system(size: 36))
+                .font(.system(size: 32))
                 .foregroundStyle(.secondary)
             Text("Save shows to see discussions here.")
                 .font(.subheadline)
@@ -48,56 +55,55 @@ struct WatchlistFeedSection: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 24)
-        .padding(.horizontal, GlassTokens.Padding.horizontal)
+        .padding(.horizontal, 16)
     }
 
-    // MARK: - Row
+    // MARK: - Card (landscape, consistent size)
 
-    private func watchlistRow(_ episode: WatchlistEpisodePreview) -> some View {
-        HStack(spacing: 12) {
-            // Poster thumbnail
-            Group {
-                if let posterPath = episode.posterPath,
-                   let url = APIConfig.posterListURL(posterPath) {
-                    KFImage(url)
-                        .resizable()
-                        .placeholder { ShimmerView() }
-                        .aspectRatio(2/3, contentMode: .fill)
-                } else {
-                    Rectangle()
-                        .fill(Color(.systemGray5))
-                        .overlay(Image(systemName: "film").foregroundStyle(.secondary))
+    private func watchlistCard(_ episode: WatchlistEpisodePreview) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            ZStack(alignment: .topTrailing) {
+                // Poster as landscape card
+                Group {
+                    if let posterPath = episode.posterPath,
+                       let url = APIConfig.posterListURL(posterPath) {
+                        KFImage(url)
+                            .resizable()
+                            .placeholder { ShimmerView() }
+                            .aspectRatio(16/9, contentMode: .fill)
+                    } else {
+                        Rectangle()
+                            .fill(Color(.systemGray5))
+                            .overlay(Image(systemName: "film").foregroundStyle(.secondary))
+                    }
+                }
+                .frame(width: 180, height: 100)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+
+                // New episodes badge
+                if episode.commentCount > 0 {
+                    Text("\(episode.commentCount) new")
+                        .font(.caption2.weight(.bold))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 3)
+                        .background(AppColors.accent, in: RoundedRectangle(cornerRadius: 4))
+                        .padding(6)
                 }
             }
-            .frame(width: 50, height: 75)
-            .clipShape(RoundedRectangle(cornerRadius: 6))
 
-            VStack(alignment: .leading, spacing: 4) {
-                Text(episode.showTitle)
-                    .font(.episodeTitle)
-                    .lineLimit(1)
+            Text(episode.showTitle)
+                .font(.subheadline.weight(.medium))
+                .lineLimit(1)
+                .frame(width: 180, alignment: .leading)
 
-                Text("\(episode.episodeLabel) · \(episode.episodeName)")
-                    .font(.subheadline)
+            if let airDate = episode.airDate {
+                Text("New episode \(airDate.relativeString)")
+                    .font(.caption)
                     .foregroundStyle(.secondary)
                     .lineLimit(1)
-
-                if let airDate = episode.airDate {
-                    Text(airDate.relativeString)
-                        .font(.metadata)
-                        .foregroundStyle(Color(.tertiaryLabel))
-                }
+                    .frame(width: 180, alignment: .leading)
             }
-
-            Spacer(minLength: 0)
-
-            // Unread indicator
-            Circle()
-                .fill(AppColors.accent)
-                .frame(width: 8, height: 8)
         }
-        .padding(.horizontal, GlassTokens.Padding.horizontal)
-        .padding(.vertical, 4)
-        .contentShape(Rectangle())
     }
 }
