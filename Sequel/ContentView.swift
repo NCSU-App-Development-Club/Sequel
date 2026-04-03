@@ -6,8 +6,8 @@ struct ContentView: View {
     var body: some View {
         @Bindable var router = router
 
-        TabView {
-            Tab("Home", systemImage: "house.fill") {
+        TabView(selection: $router.selectedTab) {
+            Tab("Home", systemImage: "house.fill", value: AppTab.home) {
                 NavigationStack(path: $router.homePath) {
                     HomeView()
                         .navigationDestination(for: Route.self) { route in
@@ -15,15 +15,15 @@ struct ContentView: View {
                         }
                 }
             }
-            Tab("My Shows", systemImage: "rectangle.stack.fill") {
-                NavigationStack(path: $router.myShowsPath) {
+            Tab("Watchlist", systemImage: "rectangle.stack.fill", value: AppTab.watchlist) {
+                NavigationStack(path: $router.watchlistPath) {
                     MyShowsView()
                         .navigationDestination(for: Route.self) { route in
                             destinationView(for: route)
                         }
                 }
             }
-            Tab("Profile", systemImage: "person.fill") {
+            Tab("Profile", systemImage: "person.fill", value: AppTab.profile) {
                 NavigationStack(path: $router.profilePath) {
                     ProfileView()
                         .navigationDestination(for: Route.self) { route in
@@ -31,7 +31,7 @@ struct ContentView: View {
                         }
                 }
             }
-            Tab(role: .search) {
+            Tab(value: AppTab.search, role: .search) {
                 NavigationStack {
                     SearchView()
                         .navigationDestination(for: Route.self) { route in
@@ -74,6 +74,6 @@ struct ContentView: View {
             Text("Compose")
         case .addShow:
             Text("Add Show")
-        }#imageLiteral(resourceName: "simulator_screenshot_CBFC0D8B-46A5-4C2E-BBD5-FF98DD1D67D0.png")
+        }
     }
 }

@@ -2,32 +2,36 @@ import SwiftUI
 
 @Observable
 final class Router {
+    var selectedTab: AppTab = .home
     var homePath = NavigationPath()
-    var myShowsPath = NavigationPath()
+    var watchlistPath = NavigationPath()
     var profilePath = NavigationPath()
     var presentedSheet: Sheet?
 
     func navigate(to route: Route, tab: AppTab = .home) {
         switch tab {
         case .home: homePath.append(route)
-        case .myShows: myShowsPath.append(route)
+        case .watchlist: watchlistPath.append(route)
         case .profile: profilePath.append(route)
+        case .search: break
         }
     }
 
     func pop(tab: AppTab = .home) {
         switch tab {
         case .home: guard !homePath.isEmpty else { return }; homePath.removeLast()
-        case .myShows: guard !myShowsPath.isEmpty else { return }; myShowsPath.removeLast()
+        case .watchlist: guard !watchlistPath.isEmpty else { return }; watchlistPath.removeLast()
         case .profile: guard !profilePath.isEmpty else { return }; profilePath.removeLast()
+        case .search: break
         }
     }
 
     func popToRoot(tab: AppTab = .home) {
         switch tab {
         case .home: homePath = NavigationPath()
-        case .myShows: myShowsPath = NavigationPath()
+        case .watchlist: watchlistPath = NavigationPath()
         case .profile: profilePath = NavigationPath()
+        case .search: break
         }
     }
 
@@ -40,8 +44,9 @@ final class Router {
     }
 }
 
-enum AppTab: Sendable {
+enum AppTab: Sendable, Hashable {
     case home
-    case myShows
+    case watchlist
     case profile
+    case search
 }

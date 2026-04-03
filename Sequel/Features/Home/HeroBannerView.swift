@@ -52,7 +52,7 @@ struct HeroBannerView: View {
                             .foregroundStyle(.white)
                             .padding(.horizontal, 22)
                             .padding(.vertical, 11)
-                            .background(.ultraThinMaterial, in: Capsule())
+                            .background(AppColors.accent, in: Capsule())
                         }
 
                         // Add / Bookmark button - glass circle

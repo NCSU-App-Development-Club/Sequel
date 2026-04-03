@@ -46,7 +46,7 @@ struct HomeView: View {
 
             // Profile avatar button
             Button {
-                router.navigate(to: .settings)
+                router.selectedTab = .profile
             } label: {
                 Image(systemName: "person.crop.circle.fill")
                     .font(.system(size: 32))
@@ -109,14 +109,6 @@ struct HomeView: View {
                     )
                 }
 
-                // From Your Watchlist
-                WatchlistFeedSection(
-                    episodes: feed.watchlistEpisodes,
-                    onTapShow: { tmdbId, mediaType in
-                        router.navigate(to: .showDetail(tmdbId: tmdbId, mediaType: mediaType))
-                    }
-                )
-
                 // Recently Aired
                 if !feed.recentlyAired.isEmpty {
                     RecentlyAiredSection(
@@ -124,6 +116,14 @@ struct HomeView: View {
                         onTap: { show in navigateToShow(show) }
                     )
                 }
+
+                // From Your Watchlist
+                WatchlistFeedSection(
+                    episodes: feed.watchlistEpisodes,
+                    onTapShow: { tmdbId, mediaType in
+                        router.navigate(to: .showDetail(tmdbId: tmdbId, mediaType: mediaType))
+                    }
+                )
 
                 // Discover
                 if !feed.discover.isEmpty {

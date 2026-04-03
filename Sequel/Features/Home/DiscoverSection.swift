@@ -59,46 +59,25 @@ struct DiscoverSection: View {
                     } else {
                         Rectangle()
                             .fill(Color(.systemGray5))
-                            .overlay(
-                                Image(systemName: "tv")
-                                    .font(.title2)
-                                    .foregroundStyle(.secondary)
-                            )
                     }
                 }
                 .frame(width: 180, height: 100)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
 
-                // Title overlay at bottom
-                LinearGradient(
-                    colors: [.clear, .black.opacity(0.7)],
-                    startPoint: .center,
-                    endPoint: .bottom
-                )
-                .frame(width: 180, height: 50)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                .offset(y: 25)
-
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(show.title)
-                        .font(.caption.weight(.bold))
-                        .foregroundStyle(.white)
-                        .lineLimit(1)
-
-                    HStack(spacing: 4) {
-                        if let network = show.networks.first {
-                            Text(network)
-                                .font(.caption2)
-                                .foregroundStyle(.white.opacity(0.8))
-                        }
-                        ForEach(show.genres.prefix(1), id: \.self) { genre in
-                            Text(genre)
-                                .font(.caption2)
-                                .foregroundStyle(.white.opacity(0.8))
-                        }
+                // Comment count overlay
+                if show.voteAverage > 0 {
+                    HStack(spacing: 3) {
+                        Image(systemName: "bubble.right")
+                            .font(.caption2)
+                        Text("\(Int(show.voteAverage * 10))")
+                            .font(.caption2.weight(.medium))
                     }
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 3)
+                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 4))
+                    .padding(6)
                 }
-                .padding(8)
             }
 
             Text(show.title)
@@ -107,13 +86,13 @@ struct DiscoverSection: View {
                 .frame(width: 180, alignment: .leading)
 
             HStack(spacing: 4) {
-                if let network = show.networks.first {
-                    Text(network)
+                if let year = show.yearString {
+                    Text(year)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
-                ForEach(show.genres.prefix(1), id: \.self) { genre in
-                    Text(genre)
+                if let network = show.networks.first {
+                    Text(network)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }

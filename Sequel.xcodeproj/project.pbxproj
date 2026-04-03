@@ -18,6 +18,7 @@
 
 /* Begin PBXFileReference section */
 		FD98432A2F7EB5C400CFC638 /* Sequel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sequel.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD9843AA2F7EB5C600CFC638 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = Secrets.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -50,6 +51,7 @@
 			isa = PBXGroup;
 			children = (
 				FD98432C2F7EB5C400CFC638 /* Sequel */,
+				FD9843AA2F7EB5C600CFC638 /* Secrets.xcconfig */,
 				FD98432B2F7EB5C400CFC638 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -155,6 +157,7 @@
 /* Begin XCBuildConfiguration section */
 		FD9843332F7EB5C600CFC638 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD9843AA2F7EB5C600CFC638 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -213,11 +216,13 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+
 			};
 			name = Debug;
 		};
 		FD9843342F7EB5C600CFC638 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD9843AA2F7EB5C600CFC638 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -268,6 +273,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

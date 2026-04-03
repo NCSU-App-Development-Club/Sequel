@@ -27,6 +27,7 @@ Secrets.*.xcconfig
 
 # SwiftPM local state
 .swiftpm/
+
+# Claude Code internal files
+claude-progress.txt
 /Sequel.xcodeproj
-/Sequel.xcodeproj
-Sequel.xcodeproj/project.pbxproj
