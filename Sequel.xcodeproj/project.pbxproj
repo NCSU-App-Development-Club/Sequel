@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		16186C322F982987007C8648 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 16186C312F982981007C8648 /* Secrets.xcconfig */; };
 		FD9843AF2F7EBC5C00CFC638 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FD00000100000001 /* FirebaseAuth */; };
 		FD9843B02F7EBC5C00CFC638 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FD00000100000002 /* FirebaseFirestore */; };
 		FD9843B12F7EBC5C00CFC638 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = FD00000100000003 /* FirebaseFunctions */; };
@@ -17,8 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		16186C312F982981007C8648 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		FD98432A2F7EB5C400CFC638 /* Sequel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sequel.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		FD9843AA2F7EB5C600CFC638 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = Secrets.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -50,8 +51,8 @@
 		FD9843212F7EB5C400CFC638 = {
 			isa = PBXGroup;
 			children = (
+				16186C312F982981007C8648 /* Secrets.xcconfig */,
 				FD98432C2F7EB5C400CFC638 /* Sequel */,
-				FD9843AA2F7EB5C600CFC638 /* Secrets.xcconfig */,
 				FD98432B2F7EB5C400CFC638 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -139,6 +140,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16186C322F982987007C8648 /* Secrets.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,7 +159,7 @@
 /* Begin XCBuildConfiguration section */
 		FD9843332F7EB5C600CFC638 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FD9843AA2F7EB5C600CFC638 /* Secrets.xcconfig */;
+			baseConfigurationReference = 16186C312F982981007C8648 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -216,13 +218,13 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-
+				TMDB_API_KEY = 9f82b080a11dc9dbad4949532f119fbd;
 			};
 			name = Debug;
 		};
 		FD9843342F7EB5C600CFC638 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FD9843AA2F7EB5C600CFC638 /* Secrets.xcconfig */;
+			baseConfigurationReference = 16186C312F982981007C8648 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -273,7 +275,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
-
+				TMDB_API_KEY = 9f82b080a11dc9dbad4949532f119fbd;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
