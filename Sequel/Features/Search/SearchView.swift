@@ -149,10 +149,14 @@ struct SearchView: View {
                         resultRow(result)
                             .onTapGesture {
                                 viewModel.addRecentSearch(result.title)
-                                router.navigate(to: .showDetail(
-                                    tmdbId: result.id,
-                                    mediaType: result.mediaType
-                                ))
+                                let targetTab: AppTab = router.selectedTab == .search ? .home : router.selectedTab
+                                router.navigate(
+                                    to: .showDetail(
+                                        tmdbId: result.id,
+                                        mediaType: result.mediaType
+                                    ),
+                                    tab: targetTab
+                                )
                             }
                     }
                 }
