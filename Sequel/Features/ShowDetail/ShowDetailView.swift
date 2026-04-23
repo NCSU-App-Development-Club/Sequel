@@ -503,15 +503,3 @@ struct ShowDetailView: View {
         }
     }
 }
-
-// MARK: - WatchStatus Display Name
-
-extension WatchStatus {
-    var displayName: String {
-        switch self {
-        case .watching: "Currently Watching"
-        case .planToWatch: "Plan to Watch"
-        case .completed: "Completed"
-        }
-    }
-}

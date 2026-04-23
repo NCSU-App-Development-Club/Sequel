@@ -6,7 +6,6 @@ final class TMDBService: TMDBServiceProtocol {
 
     private let client = APIClient.shared
     private let base = APIConfig.tmdbBaseURL
-    private let apiKey = APIConfig.tmdbAPIKey
 
     // 24h config cache
     private var cachedConfiguration: TMDBConfiguration?
@@ -19,6 +18,7 @@ final class TMDBService: TMDBServiceProtocol {
 
     func searchMulti(query: String) async throws -> [SearchResult] {
         guard !query.isEmpty else { return [] }
+        let apiKey = try requireAPIKey()
         var components = URLComponents(string: "\(base)/search/multi")!
         components.queryItems = [
             URLQueryItem(name: "api_key", value: apiKey),
@@ -33,6 +33,7 @@ final class TMDBService: TMDBServiceProtocol {
     // MARK: - Show Detail (with append_to_response batching)
 
     func fetchShow(id: Int) async throws -> TMDBShowDTO {
+        let apiKey = try requireAPIKey()
         var components = URLComponents(string: "\(base)/tv/\(id)")!
         components.queryItems = [URLQueryItem(name: "api_key", value: apiKey)]
         guard let url = components.url else { throw AppError.networkError("Invalid show URL") }
@@ -54,6 +55,7 @@ final class TMDBService: TMDBServiceProtocol {
     }
 
     func fetchSeason(showId: Int, seasonNumber: Int) async throws -> TMDBSeasonDTO {
+        let apiKey = try requireAPIKey()
         var components = URLComponents(string: "\(base)/tv/\(showId)/season/\(seasonNumber)")!
         components.queryItems = [URLQueryItem(name: "api_key", value: apiKey)]
         guard let url = components.url else { throw AppError.networkError("Invalid season URL") }
@@ -61,6 +63,7 @@ final class TMDBService: TMDBServiceProtocol {
     }
 
     func fetchMovie(id: Int) async throws -> TMDBMovieDTO {
+        let apiKey = try requireAPIKey()
         var components = URLComponents(string: "\(base)/movie/\(id)")!
         components.queryItems = [
             URLQueryItem(name: "api_key", value: apiKey),
@@ -71,6 +74,7 @@ final class TMDBService: TMDBServiceProtocol {
     }
 
     func fetchWatchProviders(showId: Int) async throws -> TMDBWatchProvidersResponse {
+        let apiKey = try requireAPIKey()
         var components = URLComponents(string: "\(base)/tv/\(showId)/watch/providers")!
         components.queryItems = [URLQueryItem(name: "api_key", value: apiKey)]
         guard let url = components.url else { throw AppError.networkError("Invalid providers URL") }
@@ -78,6 +82,7 @@ final class TMDBService: TMDBServiceProtocol {
     }
 
     func fetchTrending() async throws -> [TMDBShowDTO] {
+        let apiKey = try requireAPIKey()
         var components = URLComponents(string: "\(base)/trending/tv/day")!
         components.queryItems = [URLQueryItem(name: "api_key", value: apiKey)]
         guard let url = components.url else { throw AppError.networkError("Invalid trending URL") }
@@ -88,6 +93,7 @@ final class TMDBService: TMDBServiceProtocol {
     // MARK: - Configuration (24h cache)
 
     func fetchConfiguration() async throws -> TMDBConfiguration {
+        let apiKey = try requireAPIKey()
         if let cached = cachedConfiguration,
            let fetchedAt = configurationFetchedAt,
            Date.now.timeIntervalSince(fetchedAt) < configCacheDuration {
@@ -100,5 +106,12 @@ final class TMDBService: TMDBServiceProtocol {
         cachedConfiguration = config
         configurationFetchedAt = .now
         return config
+    }
+
+    private func requireAPIKey() throws -> String {
+        guard let apiKey = APIConfig.tmdbAPIKey else {
+            throw AppError.tmdbError("TMDB API key is not configured.")
+        }
+        return apiKey
     }
 }
