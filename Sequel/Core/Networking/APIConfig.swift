@@ -3,9 +3,11 @@ import Foundation
 enum APIConfig {
     static let tmdbBaseURL = "https://api.themoviedb.org/3"
 
-    static var tmdbAPIKey: String {
-        guard let key = Bundle.main.infoDictionary?["TMDB_API_KEY"] as? String, !key.isEmpty else {
-            fatalError("TMDB_API_KEY not found in Info.plist. Set it in your scheme environment variables or xcconfig.")
+    static var tmdbAPIKey: String? {
+        guard let key = Bundle.main.infoDictionary?["TMDB_API_KEY"] as? String,
+              !key.isEmpty,
+              !key.hasPrefix("$(") else {
+            return nil
         }
         return key
     }

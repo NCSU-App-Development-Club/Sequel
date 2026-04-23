@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		16186C322F982987007C8648 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 16186C312F982981007C8648 /* Secrets.xcconfig */; };
 		FD9843AF2F7EBC5C00CFC638 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FD00000100000001 /* FirebaseAuth */; };
 		FD9843B02F7EBC5C00CFC638 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FD00000100000002 /* FirebaseFirestore */; };
 		FD9843B12F7EBC5C00CFC638 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = FD00000100000003 /* FirebaseFunctions */; };
@@ -18,7 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		16186C312F982981007C8648 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		16186C312F982981007C8648 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = Secrets.xcconfig; sourceTree = SOURCE_ROOT; };
 		FD98432A2F7EB5C400CFC638 /* Sequel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sequel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -140,7 +139,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				16186C322F982987007C8648 /* Secrets.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,7 +216,6 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TMDB_API_KEY = 9f82b080a11dc9dbad4949532f119fbd;
 			};
 			name = Debug;
 		};
@@ -275,7 +272,6 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				TMDB_API_KEY = 9f82b080a11dc9dbad4949532f119fbd;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

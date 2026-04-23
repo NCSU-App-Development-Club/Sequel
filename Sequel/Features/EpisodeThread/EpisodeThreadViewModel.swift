@@ -23,22 +23,66 @@ final class EpisodeThreadViewModel {
     /// The comment the user is currently replying to, or nil for a top-level comment.
     var replyingTo: Comment?
 
-    /// Returns comments sorted by the selected mode.
-    /// For now this is a simple local sort on the hardcoded data.
+    /// Returns comments sorted by the selected mode while keeping reply subtrees
+    /// directly under their parent comment.
     var sortedComments: [Comment] {
-        switch selectedSortMode {
-        case .hot:
-            // "Hot" weighs recent + high score — simplified here as score descending
-            return comments.sorted { $0.netScore > $1.netScore }
-        case .top:
-            return comments.sorted { $0.netScore > $1.netScore }
-        case .new:
-            return comments.sorted { $0.createdAt > $1.createdAt }
-        case .controversial:
-            // Controversial = lots of votes on both sides (high total, low net)
-            return comments.sorted {
-                ($0.upvoteCount + $0.downvoteCount) > ($1.upvoteCount + $1.downvoteCount)
+        let commentIDs = Set(comments.map(\.id))
+        let commentsByParent = Dictionary(grouping: comments, by: \.parentCommentId)
+        let topLevelComments = comments.filter { comment in
+            guard let parentCommentId = comment.parentCommentId else { return true }
+            return !commentIDs.contains(parentCommentId)
+        }
+
+        var flattenedComments: [Comment] = []
+        var visitedCommentIDs = Set<String>()
+
+        func appendThread(startingWith comment: Comment) {
+            guard visitedCommentIDs.insert(comment.id).inserted else { return }
+            flattenedComments.append(comment)
+
+            let replies = sortedForCurrentMode(commentsByParent[Optional(comment.id)] ?? [])
+            for reply in replies {
+                appendThread(startingWith: reply)
             }
+        }
+
+        for comment in sortedForCurrentMode(topLevelComments) {
+            appendThread(startingWith: comment)
+        }
+
+        let remainingComments = comments.filter { !visitedCommentIDs.contains($0.id) }
+        for comment in sortedForCurrentMode(remainingComments) {
+            appendThread(startingWith: comment)
+        }
+
+        return flattenedComments
+    }
+
+    private func sortedForCurrentMode(_ comments: [Comment]) -> [Comment] {
+        comments.sorted { lhs, rhs in
+            if lhs.id == rhs.id { return false }
+
+            switch selectedSortMode {
+            case .hot:
+                // "Hot" weighs recent + high score — simplified here as score descending.
+                if lhs.netScore != rhs.netScore { return lhs.netScore > rhs.netScore }
+            case .top:
+                if lhs.netScore != rhs.netScore { return lhs.netScore > rhs.netScore }
+            case .new:
+                if lhs.createdAt != rhs.createdAt { return lhs.createdAt > rhs.createdAt }
+            case .controversial:
+                // Controversial = lots of votes on both sides (high total, low net).
+                let lhsTotalVotes = lhs.upvoteCount + lhs.downvoteCount
+                let rhsTotalVotes = rhs.upvoteCount + rhs.downvoteCount
+                if lhsTotalVotes != rhsTotalVotes { return lhsTotalVotes > rhsTotalVotes }
+
+                let lhsNetDistance = abs(lhs.netScore)
+                let rhsNetDistance = abs(rhs.netScore)
+                if lhsNetDistance != rhsNetDistance { return lhsNetDistance < rhsNetDistance }
+            }
+
+            if lhs.createdAt != rhs.createdAt { return lhs.createdAt > rhs.createdAt }
+            return lhs.id < rhs.id
         }
     }
 
