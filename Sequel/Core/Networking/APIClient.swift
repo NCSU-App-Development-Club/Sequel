@@ -48,7 +48,11 @@ final class APIClient {
             } catch {
                 throw AppError.decodingError(error.localizedDescription)
             }
-        case 401: throw AppError.unauthorized
+        case 401:
+            if url.host?.contains("themoviedb.org") == true {
+                throw AppError.tmdbError("TMDB request was unauthorized. Check TMDB_API_KEY in Secrets.xcconfig.")
+            }
+            throw AppError.unauthorized
         case 404: throw AppError.notFound
         case 429: throw AppError.rateLimited
         default:  throw AppError.networkError("HTTP \(httpResponse.statusCode)")
