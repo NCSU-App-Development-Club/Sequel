@@ -4,6 +4,7 @@ import Kingfisher
 struct SearchView: View {
     @State private var viewModel = SearchViewModel()
     @Environment(Router.self) private var router
+    @Environment(\.dismissSearch) private var dismissSearch
     @State private var selectedFilter: SearchFilter = .topResults
 
     enum SearchFilter: String, CaseIterable {
@@ -146,18 +147,12 @@ struct SearchView: View {
             ScrollView {
                 LazyVStack(spacing: 0) {
                     ForEach(filteredResults) { result in
-                        resultRow(result)
-                            .onTapGesture {
-                                viewModel.addRecentSearch(result.title)
-                                let targetTab: AppTab = router.selectedTab == .search ? .home : router.selectedTab
-                                router.navigate(
-                                    to: .showDetail(
-                                        tmdbId: result.id,
-                                        mediaType: result.mediaType
-                                    ),
-                                    tab: targetTab
-                                )
-                            }
+                        Button {
+                            openDetails(for: result)
+                        } label: {
+                            resultRow(result)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
             }
@@ -251,5 +246,20 @@ struct SearchView: View {
         .padding(.horizontal, 16)
         .padding(.vertical, 8)
         .contentShape(Rectangle())
+    }
+
+    private func openDetails(for result: SearchResult) {
+        viewModel.addRecentSearch(result.title)
+        dismissSearch()
+
+        let destinationTab: AppTab = router.selectedTab == .search ? .home : router.selectedTab
+        router.selectedTab = destinationTab
+        router.navigate(
+            to: .showDetail(
+                tmdbId: result.id,
+                mediaType: result.mediaType
+            ),
+            tab: destinationTab
+        )
     }
 }

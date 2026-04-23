@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(Router.self) private var router
+    @AppStorage("appearancePreference") private var appearancePreference = AppAppearance.system.rawValue
 
     var body: some View {
         @Bindable var router = router
@@ -40,6 +41,7 @@ struct ContentView: View {
                 }
             }
         }
+        .preferredColorScheme((AppAppearance(rawValue: appearancePreference) ?? .system).colorScheme)
         .sheet(item: $router.presentedSheet) { sheet in
             sheetView(for: sheet)
         }
@@ -57,11 +59,11 @@ struct ContentView: View {
         case .search:
             SearchView()
         case .settings:
-            Text("Settings")
+            SettingsView()
         case .notifications:
-            Text("Notifications")
+            NotificationsView()
         case .commentHistory:
-            Text("Comment History")
+            CommentHistoryView(viewModel: ProfileViewModel())
         }
     }
 
