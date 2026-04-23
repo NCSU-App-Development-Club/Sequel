@@ -9,6 +9,8 @@ struct ThreadView: View {
 
     @State private var viewModel = EpisodeThreadViewModel()
     @Environment(\.modelContext) private var modelContext
+    @Namespace private var sortNamespace
+    @FocusState private var isComposeFieldFocused: Bool
 
     var body: some View {
         Group {
@@ -64,21 +66,30 @@ struct ThreadView: View {
 
                         Divider()
 
-                        // Sort control placeholder
-                        sortControlPlaceholder
+                        // Sort control — tappable pills that switch the ViewModel's sort mode
+                        sortControl
 
                         Divider()
 
-                        // Comments placeholder
-                        commentsPlaceholder
+                        // Comment thread — one CommentRow per comment
+                        commentsSection
+
+                        // Comment count footer
+                        if !viewModel.sortedComments.isEmpty {
+                            Text("\(viewModel.sortedComments.count) comments")
+                                .font(.caption2)
+                                .foregroundStyle(AppColors.tertiaryText)
+                                .frame(maxWidth: .infinity)
+                                .padding(.top, 8)
+                        }
                     }
                     .padding(.horizontal, GlassTokens.Padding.horizontal)
                 }
                 .padding(.bottom, 80)  // Space for compose bar
             }
 
-            // Compose bar placeholder
-            composeBarPlaceholder
+            // Compose bar — real text field
+            composeBar
         }
     }
 
@@ -243,59 +254,147 @@ struct ThreadView: View {
         .buttonStyle(.plain)
     }
 
-    // MARK: - Sort Control Placeholder
+    // MARK: - Sort Control
 
-    private var sortControlPlaceholder: some View {
+    /// Interactive sort pills — tapping one changes the sort mode on the ViewModel,
+    /// which re-sorts `sortedComments` and SwiftUI automatically re-renders the list.
+    private var sortControl: some View {
         HStack(spacing: 0) {
-            ForEach(["Hot", "Top", "New", "Controversial"], id: \.self) { label in
-                Text(label)
-                    .font(.caption.weight(label == "Hot" ? .bold : .regular))
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 8)
-                    .background(
-                        label == "Hot" ? AppColors.accent.opacity(0.15) : Color.clear,
-                        in: Capsule()
-                    )
-                    .foregroundStyle(label == "Hot" ? AppColors.accent : .secondary)
+            ForEach(CommentSortMode.allCases, id: \.self) { mode in
+                Button {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        viewModel.selectedSortMode = mode
+                    }
+                } label: {
+                    Text(mode.rawValue.capitalized)
+                        .font(.caption.weight(viewModel.selectedSortMode == mode ? .bold : .regular))
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .background {
+                            if viewModel.selectedSortMode == mode {
+                                Capsule()
+                                    .fill(AppColors.accent.opacity(0.15))
+                                    .matchedGeometryEffect(id: "sortPill", in: sortNamespace)
+                            }
+                        }
+                        .foregroundStyle(viewModel.selectedSortMode == mode ? AppColors.accent : .secondary)
+                }
+                .buttonStyle(.plain)
             }
         }
     }
 
-    // MARK: - Comments Placeholder
+    // MARK: - Comments Section
 
-    private var commentsPlaceholder: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "bubble.right")
-                .font(.system(size: 36))
-                .foregroundStyle(.secondary)
-            Text("Comments coming soon")
-                .font(.headline)
-                .foregroundStyle(.secondary)
-            Text("The discussion engine will be built in Sprint 3.")
-                .font(.subheadline)
-                .foregroundStyle(Color(.tertiaryLabel))
-                .multilineTextAlignment(.center)
+    /// Renders one `CommentRow` per comment. `ForEach` is the "stamping" mechanism —
+    /// it takes the `sortedComments` array and creates one view per element.
+    /// When the sort mode changes, `sortedComments` returns a different order,
+    /// and SwiftUI animates the rows into their new positions.
+    private var commentsSection: some View {
+        Group {
+            if viewModel.sortedComments.isEmpty {
+                VStack(spacing: 16) {
+                    Image(systemName: "bubble.right")
+                        .font(.system(size: 36))
+                        .foregroundStyle(.secondary)
+                    Text("No comments yet")
+                        .font(.headline)
+                        .foregroundStyle(.secondary)
+                    Text("Be the first to start the discussion.")
+                        .font(.subheadline)
+                        .foregroundStyle(AppColors.tertiaryText)
+                        .multilineTextAlignment(.center)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 40)
+            } else {
+                LazyVStack(alignment: .leading, spacing: 0) {
+                    ForEach(viewModel.sortedComments) { comment in
+                        CommentRow(
+                            comment: comment,
+                            currentVote: viewModel.userVotes[comment.id],
+                            onUpvote: { viewModel.toggleVote(commentId: comment.id, direction: .up) },
+                            onDownvote: { viewModel.toggleVote(commentId: comment.id, direction: .down) },
+                            onReply: {
+                                viewModel.startReply(to: comment)
+                                isComposeFieldFocused = true
+                            }
+                        )
+                        Divider()
+                            .padding(.leading, CGFloat(comment.depth) * GlassTokens.CommentIndent.perLevel)
+                    }
+                }
+            }
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 40)
     }
 
-    // MARK: - Compose Bar Placeholder
+    // MARK: - Compose Bar
 
-    private var composeBarPlaceholder: some View {
-        HStack {
-            Text("Join the discussion...")
+    /// A real text field + send button pinned to the bottom of the screen.
+    /// Typing and tapping send calls `viewModel.sendComment()`, which appends
+    /// the new comment to the local array and clears the text field.
+    private var composeBar: some View {
+        VStack(spacing: 0) {
+            // Reply context banner — shows who you're replying to
+            if let replyTarget = viewModel.replyingTo {
+                HStack {
+                    Image(systemName: "arrowshape.turn.up.left.fill")
+                        .font(.caption2)
+                        .foregroundStyle(AppColors.accent)
+                    Text("Replying to @\(replyTarget.authorDisplayName)")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Button {
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            viewModel.cancelReply()
+                        }
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    .buttonStyle(.plain)
+                }
+                .padding(.horizontal, GlassTokens.Padding.horizontal)
+                .padding(.vertical, 6)
+                .background(Color(.systemGray6))
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+            }
+
+            // Text field + send button
+            HStack(spacing: 10) {
+                TextField(
+                    viewModel.replyingTo != nil ? "Write a reply..." : "Join the discussion...",
+                    text: $viewModel.composeText
+                )
                 .font(.subheadline)
-                .foregroundStyle(.secondary)
-            Spacer()
-            Image(systemName: "paperplane.fill")
-                .foregroundStyle(.secondary)
+                .focused($isComposeFieldFocused)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 10)
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(Color(.systemGray6))
+                )
+                .submitLabel(.send)
+                .onSubmit {
+                    viewModel.sendComment()
+                }
+
+                Button {
+                    viewModel.sendComment()
+                } label: {
+                    Image(systemName: "paperplane.fill")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundStyle(viewModel.composeText.trimmingCharacters(in: .whitespaces).isEmpty
+                                         ? .secondary
+                                         : AppColors.accent)
+                }
+                .disabled(viewModel.composeText.trimmingCharacters(in: .whitespaces).isEmpty)
+            }
+            .padding(.horizontal, GlassTokens.Padding.horizontal)
+            .padding(.vertical, 8)
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
         .background(.ultraThinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 20))
-        .padding(.horizontal, GlassTokens.Padding.horizontal)
-        .padding(.bottom, 8)
     }
 }
