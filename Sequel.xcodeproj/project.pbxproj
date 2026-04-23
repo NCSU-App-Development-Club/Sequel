@@ -17,8 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		16186C312F982981007C8648 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = Secrets.xcconfig; sourceTree = SOURCE_ROOT; };
 		FD98432A2F7EB5C400CFC638 /* Sequel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sequel.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		FD9843AA2F7EB5C600CFC638 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -50,8 +50,8 @@
 		FD9843212F7EB5C400CFC638 = {
 			isa = PBXGroup;
 			children = (
+				16186C312F982981007C8648 /* Secrets.xcconfig */,
 				FD98432C2F7EB5C400CFC638 /* Sequel */,
-				FD9843AA2F7EB5C600CFC638 /* Secrets.xcconfig */,
 				FD98432B2F7EB5C400CFC638 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -157,7 +157,7 @@
 /* Begin XCBuildConfiguration section */
 		FD9843332F7EB5C600CFC638 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FD9843AA2F7EB5C600CFC638 /* Secrets.xcconfig */;
+			baseConfigurationReference = 16186C312F982981007C8648 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -221,7 +221,7 @@
 		};
 		FD9843342F7EB5C600CFC638 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FD9843AA2F7EB5C600CFC638 /* Secrets.xcconfig */;
+			baseConfigurationReference = 16186C312F982981007C8648 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -306,7 +306,6 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TMDB_API_KEY = 9f82b080a11dc9dbad4949532f119fbd;
 			};
 			name = Debug;
 		};
@@ -340,7 +339,6 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TMDB_API_KEY = 9f82b080a11dc9dbad4949532f119fbd;
 			};
 			name = Release;
 		};

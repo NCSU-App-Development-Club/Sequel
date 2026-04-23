@@ -6,6 +6,7 @@ struct MyShowsView: View {
     @State private var viewModel = MyShowsViewModel()
     @Environment(Router.self) private var router
     @Environment(\.modelContext) private var modelContext
+    @Namespace private var segmentNamespace
 
     @Query private var watchlistEntries: [WatchlistEntry]
     @Query private var shows: [Show]
@@ -15,28 +16,58 @@ struct MyShowsView: View {
         ZStack {
             Color.black.ignoresSafeArea()
 
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 22) {
-                    header
+            List {
+                VStack(alignment: .leading, spacing: 20) {
                     statusSegments
-                    countRow
+                    summaryRow
 
                     if displayRows.isEmpty {
                         emptyState
-                    } else {
-                        LazyVStack(spacing: 22) {
-                            ForEach(displayRows) { row in
-                                showRow(row)
-                            }
-                        }
                     }
                 }
-                .padding(.horizontal, 28)
-                .padding(.top, 26)
-                .padding(.bottom, 110)
+                .listRowInsets(EdgeInsets(top: 26, leading: 28, bottom: displayRows.isEmpty ? 110 : 4, trailing: 28))
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
+
+                if !displayRows.isEmpty {
+                    ForEach(displayRows) { row in
+                        showRow(row)
+                            .listRowInsets(EdgeInsets(top: 0, leading: 28, bottom: 18, trailing: 28))
+                            .listRowBackground(Color.clear)
+                            .listRowSeparator(.hidden)
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                Button(role: .destructive) {
+                                    remove(row, haptic: true)
+                                } label: {
+                                    Label("Remove", systemImage: "trash")
+                                }
+                            }
+                    }
+
+                    Color.clear
+                        .frame(height: 90)
+                        .listRowInsets(EdgeInsets())
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                }
+            }
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+        }
+        .navigationTitle("My Shows")
+        .navigationBarTitleDisplayMode(.large)
+        .toolbarBackground(.black, for: .navigationBar)
+        .toolbarColorScheme(.dark, for: .navigationBar)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    openSearch()
+                } label: {
+                    Image(systemName: "plus")
+                }
+                .accessibilityLabel("Add show")
             }
         }
-        .toolbar(.hidden, for: .navigationBar)
     }
 
     // MARK: - Derived State
@@ -51,64 +82,91 @@ struct MyShowsView: View {
 
     // MARK: - Layout
 
-    private var header: some View {
-        HStack(spacing: 12) {
-            Text("My Shows")
-                .font(.system(size: 34, weight: .bold))
-                .foregroundStyle(.white)
-
-            Spacer()
-
-            Button {
-                openSearch()
-            } label: {
-                Image(systemName: "plus")
-                    .font(.system(size: 20, weight: .medium))
-                    .foregroundStyle(.white)
-                    .frame(width: 40, height: 40)
-                    .background(Color(hex: "1C1C1E"), in: Circle())
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel("Add show")
-        }
-        .padding(.bottom, 6)
-    }
-
     private var statusSegments: some View {
-        HStack(spacing: 6) {
+        HStack(spacing: 4) {
             ForEach(WatchStatus.allCases, id: \.self) { status in
                 Button {
                     withAnimation(.spring(response: 0.35, dampingFraction: 0.88)) {
                         viewModel.selectedStatus = status
                     }
                 } label: {
-                    HStack(spacing: 8) {
+                    HStack(spacing: 4) {
                         Image(systemName: status.myShowsIcon)
-                            .font(.system(size: 13, weight: .medium))
+                            .font(.system(size: 12, weight: .semibold))
+
                         Text(status.myShowsLabel)
-                            .font(.system(size: 14, weight: .medium))
+                            .font(.system(size: 11, weight: .semibold))
                             .lineLimit(1)
-                            .minimumScaleFactor(0.82)
+                            .minimumScaleFactor(0.66)
                             .allowsTightening(true)
                     }
-                    .foregroundStyle(segmentForeground(for: status))
-                    .frame(maxWidth: .infinity)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 12)
-                    .background(segmentBackground(for: status), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+                    .foregroundStyle(status == viewModel.selectedStatus ? .white : .white.opacity(0.58))
+                    .frame(maxWidth: .infinity, minHeight: 38)
+                    .padding(.horizontal, 4)
+                    .background {
+                        if status == viewModel.selectedStatus {
+                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                .fill(.white.opacity(0.16))
+                                .matchedGeometryEffect(id: "selectedWatchStatus", in: segmentNamespace)
+                                .watchlistGlass()
+                        }
+                    }
                 }
                 .buttonStyle(.plain)
+                .accessibilityAddTraits(status == viewModel.selectedStatus ? .isSelected : [])
             }
         }
-        .padding(6)
-        .background(Color(hex: "111111"), in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .padding(5)
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .watchlistGlass()
     }
 
-    private var countRow: some View {
-        Text(viewModel.countLabel(for: displayRows))
-            .font(.system(size: 16, weight: .regular))
-            .foregroundStyle(.white.opacity(0.34))
-            .padding(.top, 4)
+    private var summaryRow: some View {
+        HStack(spacing: 12) {
+            Text(viewModel.countLabel(for: displayRows))
+                .font(.system(size: 16, weight: .regular))
+                .foregroundStyle(.white.opacity(0.42))
+
+            Spacer()
+
+            sortMenu
+        }
+    }
+
+    private var sortMenu: some View {
+        Menu {
+            ForEach(ShowListSortMode.allCases, id: \.self) { mode in
+                Button {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        viewModel.sortMode = mode
+                    }
+                } label: {
+                    Label(
+                        mode.displayName,
+                        systemImage: mode == viewModel.sortMode ? "checkmark.circle.fill" : "circle"
+                    )
+                }
+            }
+        } label: {
+            HStack(spacing: 7) {
+                Image(systemName: "arrow.up.arrow.down")
+                    .font(.system(size: 12, weight: .semibold))
+
+                Text(viewModel.sortMode.displayName)
+                    .font(.system(size: 13, weight: .semibold))
+                    .lineLimit(1)
+
+                Image(systemName: "chevron.down")
+                    .font(.system(size: 10, weight: .bold))
+            }
+            .foregroundStyle(.white.opacity(0.82))
+            .padding(.horizontal, 12)
+            .frame(height: 36)
+            .background(.ultraThinMaterial, in: Capsule())
+            .watchlistGlass()
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("Sort shows")
     }
 
     private var emptyState: some View {
@@ -142,42 +200,56 @@ struct MyShowsView: View {
         .frame(maxWidth: .infinity)
         .padding(.vertical, 38)
         .padding(.horizontal, 24)
-        .background(Color(hex: "111111"), in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+        .background(Color(hex: "111111"), in: RoundedRectangle(cornerRadius: 22, style: .continuous))
     }
 
     private func showRow(_ row: MyShowRowModel) -> some View {
         Button {
             openShow(row)
         } label: {
-            HStack(spacing: 14) {
+            HStack(alignment: .top, spacing: 14) {
                 posterView(for: row)
 
-                VStack(alignment: .leading, spacing: 6) {
+                VStack(alignment: .leading, spacing: 7) {
                     Text(row.title)
-                        .font(.system(size: 19, weight: .semibold))
+                        .font(.system(size: 18, weight: .semibold))
                         .foregroundStyle(.white)
                         .lineLimit(2)
 
                     Text(row.metadataLine)
-                        .font(.system(size: 15, weight: .regular))
-                        .foregroundStyle(.white.opacity(0.34))
+                        .font(.system(size: 14, weight: .regular))
+                        .foregroundStyle(.white.opacity(0.46))
                         .lineLimit(1)
 
+                    if !row.genres.isEmpty {
+                        genreRow(row.genres)
+                    }
+
                     if let nextEpisodeText = row.nextEpisodeText {
-                        Text(nextEpisodeText)
-                            .font(.system(size: 15, weight: .medium))
+                        Label(nextEpisodeText, systemImage: "calendar")
+                            .font(.system(size: 14, weight: .medium))
                             .foregroundStyle(AppColors.accent)
+                            .lineLimit(1)
+                    }
+
+                    if let progressText = row.progressText {
+                        Text(progressText)
+                            .font(.system(size: 13, weight: .regular))
+                            .foregroundStyle(.white.opacity(0.5))
                             .lineLimit(1)
                     }
                 }
 
-                Spacer(minLength: 12)
+                Spacer(minLength: 10)
 
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 18, weight: .medium))
-                    .foregroundStyle(.white.opacity(0.15))
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundStyle(.white.opacity(0.16))
+                    .padding(.top, 36)
             }
-            .contentShape(Rectangle())
+            .padding(12)
+            .background(Color(hex: "101010"), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .contentShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
         .buttonStyle(.plain)
         .contextMenu {
@@ -187,7 +259,7 @@ struct MyShowsView: View {
                 } label: {
                     Label(
                         status.displayName,
-                        systemImage: status == viewModel.selectedStatus ? "checkmark.circle.fill" : "circle"
+                        systemImage: status == row.status ? "checkmark.circle.fill" : "circle"
                     )
                 }
             }
@@ -204,9 +276,26 @@ struct MyShowsView: View {
             }
 
             Button(role: .destructive) {
-                remove(row)
+                remove(row, haptic: true)
             } label: {
                 Label("Remove", systemImage: "trash")
+            }
+        }
+        .accessibilityAction(named: "Remove") {
+            remove(row, haptic: true)
+        }
+    }
+
+    private func genreRow(_ genres: [String]) -> some View {
+        HStack(spacing: 6) {
+            ForEach(genres, id: \.self) { genre in
+                Text(genre)
+                    .font(.caption2.weight(.medium))
+                    .foregroundStyle(.white.opacity(0.72))
+                    .lineLimit(1)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(Color.white.opacity(0.08), in: Capsule())
             }
         }
     }
@@ -214,20 +303,20 @@ struct MyShowsView: View {
     private func posterView(for row: MyShowRowModel) -> some View {
         ZStack(alignment: .topTrailing) {
             Group {
-                if let backdropPath = row.backdropPath,
-                   let url = APIConfig.backdropCardURL(backdropPath) {
+                if let posterPath = row.posterPath,
+                   let url = APIConfig.posterListURL(posterPath) {
                     KFImage(url)
                         .resizable()
                         .placeholder { ShimmerView() }
                         .aspectRatio(contentMode: .fill)
-                } else if let posterPath = row.posterPath,
-                          let url = APIConfig.posterListURL(posterPath) {
+                } else if let backdropPath = row.backdropPath,
+                          let url = APIConfig.backdropCardURL(backdropPath) {
                     KFImage(url)
                         .resizable()
                         .placeholder { ShimmerView() }
                         .aspectRatio(contentMode: .fill)
                 } else {
-                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
                         .fill(Color(hex: "161616"))
                         .overlay(
                             Image(systemName: "film.fill")
@@ -236,29 +325,21 @@ struct MyShowsView: View {
                         )
                 }
             }
-            .frame(width: 102, height: 64)
-            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .frame(width: 60, height: 90)
+            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
 
             if row.unreadBadgeCount > 0 {
                 Text("\(row.unreadBadgeCount)")
-                    .font(.system(size: 15, weight: .semibold))
+                    .font(.system(size: 12, weight: .semibold))
                     .foregroundStyle(.white)
-                    .frame(width: 34, height: 34)
+                    .frame(width: 26, height: 26)
                     .background(AppColors.accent, in: Circle())
-                    .offset(x: 10, y: -10)
+                    .offset(x: 9, y: -9)
             }
         }
     }
 
-    // MARK: - Helpers
-
-    private func segmentForeground(for status: WatchStatus) -> Color {
-        status == viewModel.selectedStatus ? .white : .white.opacity(0.5)
-    }
-
-    private func segmentBackground(for status: WatchStatus) -> Color {
-        status == viewModel.selectedStatus ? .white.opacity(0.14) : .clear
-    }
+    // MARK: - Actions
 
     private func openSearch() {
         router.navigate(to: .search, tab: .watchlist)
@@ -294,12 +375,28 @@ struct MyShowsView: View {
         }
     }
 
-    private func remove(_ row: MyShowRowModel) {
+    private func remove(_ row: MyShowRowModel, haptic: Bool = false) {
         guard let entry = watchlistEntries.first(where: { $0.id == row.id }) else { return }
+
+        if haptic {
+            let generator = UIImpactFeedbackGenerator(style: .medium)
+            generator.impactOccurred()
+        }
 
         withAnimation(.spring(response: 0.35, dampingFraction: 0.9)) {
             modelContext.delete(entry)
             try? modelContext.save()
+        }
+    }
+}
+
+private extension View {
+    @ViewBuilder
+    func watchlistGlass() -> some View {
+        if #available(iOS 26.0, *) {
+            self.glassEffect()
+        } else {
+            self
         }
     }
 }

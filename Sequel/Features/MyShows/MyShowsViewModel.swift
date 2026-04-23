@@ -36,11 +36,12 @@ final class MyShowsViewModel {
             let nextEpisodeText: String?
             if let upcomingEpisode, let airDate = upcomingEpisode.airDate {
                 nextEpisodeText = "New episode \(nextEpisodeLabel(for: airDate))"
-            } else if discussedCount > 0 && loadedEpisodeCount > 0 {
-                nextEpisodeText = "\(discussedCount) of \(loadedEpisodeCount) episodes discussed"
             } else {
                 nextEpisodeText = nil
             }
+            let progressText = loadedEpisodeCount > 0
+                ? "\(discussedCount) of \(loadedEpisodeCount) episodes discussed"
+                : nil
 
             let latestActivityDate = showEpisodes.compactMap(\.airDate).max()
                 ?? entry.dateAdded
@@ -49,11 +50,14 @@ final class MyShowsViewModel {
                 id: entry.id,
                 tmdbId: show.tmdbId,
                 mediaType: show.mediaType,
+                status: entry.status,
                 title: show.title,
                 posterPath: show.posterPath,
                 backdropPath: show.backdropPath,
                 metadataLine: metadataLine(for: show),
+                genres: Array(show.genres.prefix(2)),
                 nextEpisodeText: nextEpisodeText,
+                progressText: progressText,
                 unreadBadgeCount: min(discussedCount, 9),
                 notificationsEnabled: entry.notificationsEnabled,
                 latestActivityDate: latestActivityDate,
@@ -85,13 +89,7 @@ final class MyShowsViewModel {
 
     private func metadataLine(for show: Show) -> String {
         let provider = show.networks.first ?? fallbackProvider(for: show)
-        let seasonText: String
-        if show.mediaType == .movie {
-            seasonText = "Movie"
-        } else {
-            seasonText = show.seasonCount == 1 ? "1 Season" : "\(max(show.seasonCount, 1)) Seasons"
-        }
-        return "\(provider)  •  \(seasonText)"
+        return provider
     }
 
     private func fallbackProvider(for show: Show) -> String {
@@ -167,11 +165,14 @@ struct MyShowRowModel: Identifiable {
     let id: String
     let tmdbId: Int
     let mediaType: MediaType
+    let status: WatchStatus
     let title: String
     let posterPath: String?
     let backdropPath: String?
     let metadataLine: String
+    let genres: [String]
     let nextEpisodeText: String?
+    let progressText: String?
     let unreadBadgeCount: Int
     let notificationsEnabled: Bool
     let latestActivityDate: Date

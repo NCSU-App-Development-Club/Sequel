@@ -12,7 +12,7 @@ extension WatchStatus {
     var myShowsLabel: String {
         switch self {
         case .watching: "Watching"
-        case .planToWatch: "Up Next"
+        case .planToWatch: "Plan to Watch"
         case .completed: "Completed"
         }
     }
